@@ -1,30 +1,14 @@
-import {
-  Text,
-  View,
-  Pressable,
-  TouchableOpacity,
-  SafeAreaView,
-} from "react-native";
+import { Text, View, SafeAreaView } from "react-native";
 import { Feather } from "@expo/vector-icons";
-import Svg, {
-  Circle,
-  Defs,
-  Path,
-  Stop,
-  RadialGradient,
-} from "react-native-svg";
+import Svg, { Circle, Defs, Stop, RadialGradient } from "react-native-svg";
 import GoalCard from "@/components/GoalCard";
-import {
-  DrawerNavigationProp,
-  DrawerToggleButton,
-} from "@react-navigation/drawer";
 import { useEffect, useReducer, useState } from "react";
 import { Goal } from "@/types/Goal";
 import NoGoalSet from "@/components/NoGoalSet";
 import { AnimatedCircularProgress } from "react-native-circular-progress";
-import ButtonNormal from "@/components/ButtonNormal";
 import { Image } from "expo-image";
 import { Link } from "expo-router";
+import FeaturedCard from "@/components/FeaturedCard";
 
 export default function Home() {
   const props: {
@@ -33,33 +17,36 @@ export default function Home() {
     goals: [
       {
         id: "1",
-        icon: "🚿",
-        title: "Take a shower",
+        icon: "../assets/images/first_card_icon.png",
+        title: "Digital Detox",
         description: "This is a test goal",
-        type: "Body",
+        type: "Self",
         completed: false,
+        time: "13:00 - 18:00",
       },
       {
         id: "2",
-        icon: "❤️",
-        title: "Put 5 items on vision board",
-        description: "This is a test goal 2",
-        type: "Mind",
-        completed: false,
-      },
-      {
-        id: "3",
-        icon: "❤️",
-        title: "Put 5 items on vision board",
+        icon: "../assets/images/second_card_icon.png",
+        title: "Grab a coffee",
         description: "This is a test goal 2",
         type: "People",
         completed: false,
+        time: "12:00",
+      },
+      {
+        id: "3",
+        icon: "../assets/images/third_card_icon.png",
+        title: "Go for a walk",
+        description: "This is a test goal 2",
+        type: "Body",
+        completed: false,
+        time: "10:00",
       },
     ],
   };
 
   type State = {
-    mindGoal: Goal | undefined;
+    selfGoal: Goal | undefined;
     bodyGoal: Goal | undefined;
     peopleGoal: Goal | undefined;
   };
@@ -70,46 +57,46 @@ export default function Home() {
     | { type: "COMPLETE_GOAL"; goal: Goal };
 
   const initialState: State = {
-    bodyGoal: props.goals.find((goal) => goal.type === "Body"),
-    mindGoal: props.goals.find((goal) => goal.type === "Mind"),
-    peopleGoal: props.goals.find((goal) => goal.type === "People"),
+    bodyGoal: props.goals.find((goal) => goal.type === "Self"),
+    selfGoal: props.goals.find((goal) => goal.type === "People"),
+    peopleGoal: props.goals.find((goal) => goal.type === "Body"),
   };
 
   const reducer = (state: State, action: Action): State => {
     switch (action.type) {
       case "ADD_GOAL":
         switch (action.goal.type) {
-          case "Body":
+          case "Self":
             return {
               ...state,
-              bodyGoal: action.goal,
-            };
-          case "Mind":
-            return {
-              ...state,
-              mindGoal: action.goal,
+              selfGoal: action.goal,
             };
           case "People":
             return {
               ...state,
               peopleGoal: action.goal,
             };
-          default:
-            return state;
-        }
-      case "UPDATE_GOAL":
-        switch (action.goal.type) {
           case "Body":
             return {
               ...state,
               bodyGoal: action.goal,
             };
-          case "Mind":
+          default:
+            return state;
+        }
+      case "UPDATE_GOAL":
+        switch (action.goal.type) {
+          case "Self":
             return {
               ...state,
-              mindGoal: action.goal,
+              selfGoal: action.goal,
             };
           case "People":
+            return {
+              ...state,
+              selfGoal: action.goal,
+            };
+          case "Body":
             return {
               ...state,
               peopleGoal: action.goal,
@@ -121,7 +108,7 @@ export default function Home() {
         // set the completed property of the goal to true
         // and update the state
         switch (action.goal.type) {
-          case "Body":
+          case "Self":
             if (state.bodyGoal) {
               return {
                 ...state,
@@ -132,18 +119,18 @@ export default function Home() {
               };
             }
             break;
-          case "Mind":
-            if (state.mindGoal) {
+          case "People":
+            if (state.selfGoal) {
               return {
                 ...state,
-                mindGoal: {
-                  ...state.mindGoal,
-                  completed: !state.mindGoal.completed,
+                selfGoal: {
+                  ...state.selfGoal,
+                  completed: !state.selfGoal.completed,
                 },
               };
             }
             break;
-          case "People":
+          case "Body":
             if (state.peopleGoal) {
               return {
                 ...state,
@@ -168,7 +155,7 @@ export default function Home() {
   useEffect(() => {
     setCompletion(
       (state.bodyGoal?.completed ? 1 : 0) +
-        (state.mindGoal?.completed ? 1 : 0) +
+        (state.selfGoal?.completed ? 1 : 0) +
         (state.peopleGoal?.completed ? 1 : 0)
     );
   }, [state]);
@@ -184,7 +171,7 @@ export default function Home() {
         style={{
           flex: 1,
           backgroundColor: "#f7f7f7",
-          gap: 35,
+          gap: 23,
           marginBottom: 35,
         }}
       >
@@ -195,10 +182,11 @@ export default function Home() {
             gap: 20,
             alignItems: "center",
             justifyContent: "space-between",
-            paddingRight: 20,
+            paddingLeft: 30,
+            paddingRight: 44,
           }}
         >
-          <DrawerToggleButton tintColor="black" />
+          {/* <DrawerToggleButton tintColor="black" /> */}
           <Text
             style={{
               fontSize: 20,
@@ -206,19 +194,24 @@ export default function Home() {
               textAlign: "center",
             }}
           >
-            Good Evening, Emma
+            Good Morning, Emma
           </Text>
           <View
             style={{
               flex: 1,
               flexDirection: "row",
               justifyContent: "flex-end",
-              gap: 20,
+              gap: 5,
               alignItems: "center",
             }}
           >
-            <Text>S</Text>
-            <Text>P</Text>
+            <Image
+              source={require("../../assets/images/fire_icon.png")}
+              style={{
+                height: 30,
+                width: 30,
+              }}
+            />
           </View>
         </View>
 
@@ -231,35 +224,14 @@ export default function Home() {
             alignItems: "center",
           }}
         >
-          <View
-            style={{
-              width: "100%",
-              height: 32,
-              flexDirection: "row",
-              justifyContent: "space-between",
-              marginBottom: 20,
-            }}
-          >
-            <ButtonNormal
-              title={"Yesterday"}
-              onPress={() => {}}
-              active={false}
-            />
-            <ButtonNormal title={"Today"} onPress={() => {}} active={true} />
-            <ButtonNormal
-              title={"Tomorrow"}
-              onPress={() => {}}
-              active={false}
-            />
-          </View>
           <View style={{ alignItems: "center", justifyContent: "center" }}>
             <AnimatedCircularProgress
-              size={268.46}
+              size={240}
               width={40}
               fill={(completion / 3) * 100 + 0.5}
               rotation={0}
               lineCap="round"
-              tintColor="#eeecf3"
+              tintColor="#D1E3F8"
               backgroundColor="#fff"
               children={() => (
                 <View
@@ -270,7 +242,7 @@ export default function Home() {
                     alignItems: "center",
                   }}
                 >
-                  <Svg height="100%" width="100%" viewBox="0 0 268.46 268.46">
+                  <Svg height="100%" width="100%" viewBox="0 0 240 240">
                     <Defs>
                       <RadialGradient
                         id="grad"
@@ -286,12 +258,7 @@ export default function Home() {
                         <Stop offset="100%" stopColor="#FFF" stopOpacity="1" />
                       </RadialGradient>
                     </Defs>
-                    <Circle
-                      cx="134.23"
-                      cy="134.23"
-                      r="134.23"
-                      fill="url(#grad)"
-                    />
+                    <Circle cx="120" cy="120" r="120" fill="url(#grad)" />
                     <View
                       style={{
                         justifyContent: "center",
@@ -303,7 +270,7 @@ export default function Home() {
                       <Image
                         source={require("../../assets/images/progress_poly.png")}
                         style={{
-                          height: 135.665,
+                          height: 135.667,
                           width: 135.665,
                         }}
                       />
@@ -326,7 +293,7 @@ export default function Home() {
                   </CircularText>*/
               )}
             />
-            <View style={{ position: "absolute", bottom: 3 }}>
+            {/* <View style={{ position: "absolute", bottom: 3 }}>
               <Feather name="sun" size={30} color="#000" />
             </View>
             <View style={{ position: "absolute", right: 5 }}>
@@ -334,20 +301,20 @@ export default function Home() {
             </View>
             <View style={{ position: "absolute", left: 5 }}>
               <Feather name="sun" size={30} color="#000" />
-            </View>
+            </View> */}
           </View>
           <View
             style={{
               flexDirection: "row",
               justifyContent: "space-between",
-              width: 352,
+              width: 330,
             }}
           >
             <Text
               style={{
                 fontSize: 16,
                 textAlign: "center",
-                fontFamily: "Rubik_400Regular",
+                fontFamily: "Rubik_500Medium",
               }}
             >
               Today's Goals
@@ -359,15 +326,13 @@ export default function Home() {
                 fontFamily: "Rubik_400Regular",
               }}
             >
-              {`${completion} / 3 completed`}
+              {`${completion}/3 completed`}
             </Text>
           </View>
           <View
             style={{
               flex: 1,
-              gap: 12,
-              justifyContent: "space-evenly",
-              alignItems: "flex-start",
+              gap: 11,
             }}
           >
             {state.bodyGoal ? (
@@ -380,15 +345,15 @@ export default function Home() {
             ) : (
               <NoGoalSet type={"Body"} />
             )}
-            {state.mindGoal ? (
+            {state.selfGoal ? (
               <GoalCard
-                goal={state.mindGoal}
+                goal={state.selfGoal}
                 onCompleted={(goal: Goal) => {
                   dispatch({ type: "COMPLETE_GOAL", goal: goal });
                 }}
               />
             ) : (
-              <NoGoalSet type={"Mind"} />
+              <NoGoalSet type={"Self"} />
             )}
             {state.peopleGoal ? (
               <GoalCard
@@ -400,19 +365,41 @@ export default function Home() {
             ) : (
               <NoGoalSet type={"People"} />
             )}
+
+            <View
+              style={{
+                paddingHorizontal: 10,
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 16,
+                  fontFamily: "Rubik_500Medium",
+                }}
+              >
+                Featured
+              </Text>
+            </View>
+            <View>
+              <FeaturedCard />
+            </View>
           </View>
         </View>
       </SafeAreaView>
+
       <View
         style={{
           // TODO: not sure if this is the best way to do this
           // might need to think about this design more
-          height: 83,
-          width: "100%",
-          backgroundColor: "#E0E0FF",
+          height: 68,
+          width: 68,
+          backgroundColor: "#A59AC8",
           flexDirection: "row",
           alignItems: "center",
-          paddingHorizontal: 20.5,
+          position: "absolute",
+          right: 0,
+          bottom: 0,
+          borderTopLeftRadius: 60,
         }}
       >
         <View
@@ -430,17 +417,16 @@ export default function Home() {
           >
             <Text
               style={{
-                fontSize: 20,
-                fontWeight: "500",
+                fontSize: 32,
                 paddingVertical: 20,
                 textAlign: "center",
               }}
             >
-              + Add Goals
+              +
             </Text>
           </Link>
         </View>
-        <Pressable
+        {/* <Pressable
           style={{
             flexDirection: "row",
             alignItems: "center",
@@ -484,7 +470,7 @@ export default function Home() {
           >
             Mood
           </Text>
-        </Pressable>
+        </Pressable> */}
       </View>
     </View>
   );
