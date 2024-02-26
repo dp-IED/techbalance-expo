@@ -14,49 +14,80 @@ import Svg, {
   RadialGradient,
 } from "react-native-svg";
 import GoalCard from "@/components/GoalCard";
+import { Dimensions } from "react-native";
 import {
   DrawerNavigationProp,
   DrawerToggleButton,
 } from "@react-navigation/drawer";
-import { useEffect, useReducer, useState } from "react";
+import { useCallback, useEffect, useReducer, useState } from "react";
 import { Goal } from "@/types/Goal";
 import NoGoalSet from "@/components/NoGoalSet";
 import { AnimatedCircularProgress } from "react-native-circular-progress";
 import ButtonNormal from "@/components/ButtonNormal";
 import { Image } from "expo-image";
-import { Link } from "expo-router";
+import {
+  Link,
+  router,
+  useFocusEffect,
+  useLocalSearchParams,
+  usePathname,
+} from "expo-router";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { generateClient } from "@aws-amplify/api";
+import { listGoals } from "@/src/graphql/queries";
+
+const client = generateClient();
+
+const fetchGoals: () => Promise<Goal[] | null> = async () => {
+  //const response = await fetch("/getGoals");
+  //const data = await response.json();
+  //return data.goals as Goal[];
+
+  // fetch from local storage, pass each json and convert to Goal type
+
+  const body = await AsyncStorage.getItem("body");
+  const mind = await AsyncStorage.getItem("mind");
+  const people = await AsyncStorage.getItem("people");
+
+  let goals: Goal[] = [];
+  for (const goal of [body, mind, people]) {
+    if (goal) {
+      goals.push(JSON.parse(goal));
+    }
+  }
+  return goals;
+};
+
+async function fetchGoalsAmplify() {
+  try {
+    const todoData = await client.graphql({
+      query: listGoals,
+    });
+    const goals = todoData.data.listGoals.items as Goal[];
+    return goals;
+  } catch (err) {
+    console.log("error fetching goals");
+    return null;
+  }
+}
 
 export default function Home() {
-  const props: {
-    goals: Goal[];
-  } = {
-    goals: [
-      {
-        id: "1",
-        icon: "🚿",
-        title: "Take a shower",
-        description: "This is a test goal",
-        type: "Body",
-        completed: false,
-      },
-      {
-        id: "2",
-        icon: "❤️",
-        title: "Put 5 items on vision board",
-        description: "This is a test goal 2",
-        type: "Mind",
-        completed: false,
-      },
-      {
-        id: "3",
-        icon: "❤️",
-        title: "Put 5 items on vision board",
-        description: "This is a test goal 2",
-        type: "People",
-        completed: false,
-      },
-    ],
-  };
+  const { reload } = useLocalSearchParams();
+  const [goals, setGoals] = useState<Goal[] | null>(null);
+  useFocusEffect(
+    useCallback(() => {
+      console.log("fetching goals");
+      fetchGoals().then((data) => {
+        console.log(reload);
+        if (data) {
+          data.forEach((goal: Goal) => {
+            console.log(goal);
+            dispatch({ type: "ADD_GOAL", goal: goal }); // don't really like this but
+          });
+        }
+      });
+    }, [reload])
+  );
 
   type State = {
     mindGoal: Goal | undefined;
@@ -70,9 +101,11 @@ export default function Home() {
     | { type: "COMPLETE_GOAL"; goal: Goal };
 
   const initialState: State = {
-    bodyGoal: props.goals.find((goal) => goal.type === "Body"),
-    mindGoal: props.goals.find((goal) => goal.type === "Mind"),
-    peopleGoal: props.goals.find((goal) => goal.type === "People"),
+    bodyGoal: goals ? goals.find((goal) => goal.type === "Body") : undefined,
+    mindGoal: goals ? goals.find((goal) => goal.type === "Mind") : undefined,
+    peopleGoal: goals
+      ? goals.find((goal) => goal.type === "People")
+      : undefined,
   };
 
   const reducer = (state: State, action: Action): State => {
@@ -123,6 +156,7 @@ export default function Home() {
         switch (action.goal.type) {
           case "Body":
             if (state.bodyGoal) {
+              AsyncStorage.removeItem("body");
               return {
                 ...state,
                 bodyGoal: {
@@ -134,6 +168,8 @@ export default function Home() {
             break;
           case "Mind":
             if (state.mindGoal) {
+              AsyncStorage.removeItem("mind");
+
               return {
                 ...state,
                 mindGoal: {
@@ -145,6 +181,7 @@ export default function Home() {
             break;
           case "People":
             if (state.peopleGoal) {
+              AsyncStorage.removeItem("people");
               return {
                 ...state,
                 peopleGoal: {
@@ -178,140 +215,134 @@ export default function Home() {
       style={{
         flex: 1,
         backgroundColor: "#f7f7f7",
+        gap: 35,
+        marginTop: 60,
       }}
     >
-      <SafeAreaView
+      {/*<SafeAreaView
         style={{
           flex: 1,
           backgroundColor: "#f7f7f7",
-          gap: 35,
+          
           marginBottom: 35,
         }}
+      >*/}
+      {/* Might want to add this to the layout as a TopBar */}
+      <View
+        style={{
+          flexDirection: "row",
+          gap: 20,
+          alignItems: "center",
+          justifyContent: "space-between",
+          paddingRight: 20,
+        }}
       >
-        {/* Might want to add this to the layout as a TopBar */}
+        <DrawerToggleButton tintColor="black" />
+        <Text
+          style={{
+            fontSize: 20,
+            fontFamily: "Rubik_400Regular",
+            textAlign: "center",
+          }}
+        >
+          Good Evening, Emma
+        </Text>
         <View
           style={{
+            flex: 1,
             flexDirection: "row",
+            justifyContent: "flex-end",
             gap: 20,
             alignItems: "center",
-            justifyContent: "space-between",
-            paddingRight: 20,
           }}
         >
-          <DrawerToggleButton tintColor="black" />
-          <Text
-            style={{
-              fontSize: 20,
-              fontFamily: "Rubik_400Regular",
-              textAlign: "center",
-            }}
-          >
-            Good Evening, Emma
-          </Text>
-          <View
-            style={{
-              flex: 1,
-              flexDirection: "row",
-              justifyContent: "flex-end",
-              gap: 20,
-              alignItems: "center",
-            }}
-          >
-            <Text>S</Text>
-            <Text>P</Text>
-          </View>
+          <Text>S</Text>
+          <Text>P</Text>
         </View>
+      </View>
 
+      <View
+        style={{
+          // padding only container
+          flex: 1,
+          paddingHorizontal: 20,
+          gap: 12,
+          alignItems: "center",
+        }}
+      >
         <View
           style={{
-            // padding only container
-            flex: 1,
-            paddingHorizontal: 20,
-            gap: 12,
-            alignItems: "center",
+            width: "100%",
+            height: 32,
+            flexDirection: "row",
+            justifyContent: "space-between",
+            marginBottom: 20,
           }}
         >
-          <View
-            style={{
-              width: "100%",
-              height: 32,
-              flexDirection: "row",
-              justifyContent: "space-between",
-              marginBottom: 20,
-            }}
-          >
-            <ButtonNormal
-              title={"Yesterday"}
-              onPress={() => {}}
-              active={false}
-            />
-            <ButtonNormal title={"Today"} onPress={() => {}} active={true} />
-            <ButtonNormal
-              title={"Tomorrow"}
-              onPress={() => {}}
-              active={false}
-            />
-          </View>
-          <View style={{ alignItems: "center", justifyContent: "center" }}>
-            <AnimatedCircularProgress
-              size={268.46}
-              width={40}
-              fill={(completion / 3) * 100 + 0.5}
-              rotation={0}
-              lineCap="round"
-              tintColor="#eeecf3"
-              backgroundColor="#fff"
-              children={() => (
-                <View
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <Svg height="100%" width="100%" viewBox="0 0 268.46 268.46">
-                    <Defs>
-                      <RadialGradient
-                        id="grad"
-                        cx="50%"
-                        cy="50%"
-                        rx="50%"
-                        ry="50%"
-                        fx="50%"
-                        fy="50%"
-                        gradientUnits="userSpaceOnUse"
-                      >
-                        <Stop offset="0%" stopColor="#C9C4D9" stopOpacity="0" />
-                        <Stop offset="100%" stopColor="#FFF" stopOpacity="1" />
-                      </RadialGradient>
-                    </Defs>
-                    <Circle
-                      cx="134.23"
-                      cy="134.23"
-                      r="134.23"
-                      fill="url(#grad)"
-                    />
-                    <View
-                      style={{
-                        justifyContent: "center",
-                        alignItems: "center",
-                        // weird this doesn't work
-                        zIndex: 100,
-                      }}
+          <ButtonNormal title={"Yesterday"} onPress={() => {}} active={false} />
+          <ButtonNormal title={"Today"} onPress={() => {}} active={true} />
+          <ButtonNormal title={"Tomorrow"} onPress={() => {}} active={false} />
+        </View>
+        <View style={{ alignItems: "center", justifyContent: "center" }}>
+          <AnimatedCircularProgress
+            size={Dimensions.get("window").width * 0.7}
+            width={40}
+            fill={(completion / 3) * 100 + 0.5}
+            rotation={0}
+            lineCap="round"
+            tintColor="#eeecf3"
+            backgroundColor="#fff"
+            children={() => (
+              <View
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Svg height="100%" width="100%" viewBox="0 0 268.46 268.46">
+                  <Defs>
+                    <RadialGradient
+                      id="grad"
+                      cx="50%"
+                      cy="50%"
+                      rx="50%"
+                      ry="50%"
+                      fx="50%"
+                      fy="50%"
+                      gradientUnits="userSpaceOnUse"
                     >
-                      <Image
-                        source={require("../../assets/images/progress_poly.png")}
-                        style={{
-                          height: 135.665,
-                          width: 135.665,
-                        }}
-                      />
-                    </View>
-                  </Svg>
-                </View>
+                      <Stop offset="0%" stopColor="#C9C4D9" stopOpacity="0" />
+                      <Stop offset="100%" stopColor="#FFF" stopOpacity="1" />
+                    </RadialGradient>
+                  </Defs>
+                  <Circle
+                    cx="134.23"
+                    cy="134.23"
+                    r="134.23"
+                    fill="url(#grad)"
+                  />
+                  <View
+                    style={{
+                      justifyContent: "center",
+                      alignItems: "center",
+                      // weird this doesn't work
+                      zIndex: 100,
+                    }}
+                  >
+                    <Image
+                      source={require("../../assets/images/progress_poly.png")}
+                      style={{
+                        height: 135.665,
+                        width: 135.665,
+                      }}
+                    />
+                  </View>
+                </Svg>
+              </View>
 
-                /*<CircularText
+              /*<CircularText
                     width="300"
                     height="300"
                     style={{
@@ -324,167 +355,101 @@ export default function Home() {
                   >
                     SELF BODY PEOPLE
                   </CircularText>*/
-              )}
-            />
-            <View style={{ position: "absolute", bottom: 3 }}>
-              <Feather name="sun" size={30} color="#000" />
-            </View>
-            <View style={{ position: "absolute", right: 5 }}>
-              <Feather name="moon" size={30} color="#000" />
-            </View>
-            <View style={{ position: "absolute", left: 5 }}>
-              <Feather name="sun" size={30} color="#000" />
-            </View>
+            )}
+          />
+          <View style={{ position: "absolute", bottom: 3 }}>
+            <Feather name="sun" size={30} color="#000" />
           </View>
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              width: 352,
-            }}
-          >
-            <Text
-              style={{
-                fontSize: 16,
-                textAlign: "center",
-                fontFamily: "Rubik_400Regular",
-              }}
-            >
-              Today's Goals
-            </Text>
-            <Text
-              style={{
-                fontSize: 16,
-                textAlign: "center",
-                fontFamily: "Rubik_400Regular",
-              }}
-            >
-              {`${completion} / 3 completed`}
-            </Text>
+          <View style={{ position: "absolute", right: 5 }}>
+            <Feather name="moon" size={30} color="#000" />
           </View>
-          <View
-            style={{
-              flex: 1,
-              gap: 12,
-              justifyContent: "space-evenly",
-              alignItems: "flex-start",
-            }}
-          >
-            {state.bodyGoal ? (
-              <GoalCard
-                goal={state.bodyGoal}
-                onCompleted={(goal: Goal) => {
-                  dispatch({ type: "COMPLETE_GOAL", goal: goal });
-                }}
-              />
-            ) : (
-              <NoGoalSet type={"Body"} />
-            )}
-            {state.mindGoal ? (
-              <GoalCard
-                goal={state.mindGoal}
-                onCompleted={(goal: Goal) => {
-                  dispatch({ type: "COMPLETE_GOAL", goal: goal });
-                }}
-              />
-            ) : (
-              <NoGoalSet type={"Mind"} />
-            )}
-            {state.peopleGoal ? (
-              <GoalCard
-                goal={state.peopleGoal}
-                onCompleted={(goal: Goal) => {
-                  dispatch({ type: "COMPLETE_GOAL", goal: goal });
-                }}
-              />
-            ) : (
-              <NoGoalSet type={"People"} />
-            )}
+          <View style={{ position: "absolute", left: 5 }}>
+            <Feather name="sun" size={30} color="#000" />
           </View>
         </View>
-      </SafeAreaView>
-      <View
-        style={{
-          // TODO: not sure if this is the best way to do this
-          // might need to think about this design more
-          height: 83,
-          width: "100%",
-          backgroundColor: "#E0E0FF",
-          flexDirection: "row",
-          alignItems: "center",
-          paddingHorizontal: 20.5,
-        }}
-      >
         <View
           style={{
-            flex: 2,
             flexDirection: "row",
+            justifyContent: "space-between",
+            width: 352,
+          }}
+        >
+          <Text
+            style={{
+              fontSize: 16,
+              textAlign: "center",
+              fontFamily: "Rubik_400Regular",
+            }}
+          >
+            Today's Goals
+          </Text>
+          <Text
+            style={{
+              fontSize: 16,
+              textAlign: "center",
+              fontFamily: "Rubik_400Regular",
+            }}
+          >
+            {`${completion} / 3 completed`}
+          </Text>
+        </View>
+        <View
+          style={{
+            flex: 1,
+            gap: 15,
+            alignItems: "flex-start",
             justifyContent: "center",
           }}
         >
-          <Link
-            href="/modal"
-            style={{
-              maxWidth: 150,
-            }}
-          >
-            <Text
-              style={{
-                fontSize: 20,
-                fontWeight: "500",
-                paddingVertical: 20,
-                textAlign: "center",
+          {state.bodyGoal ? (
+            <GoalCard
+              goal={state.bodyGoal}
+              onCompleted={(goal: Goal) => {
+                dispatch({ type: "COMPLETE_GOAL", goal: goal });
               }}
-            >
-              + Add Goals
-            </Text>
-          </Link>
+            />
+          ) : (
+            <NoGoalSet type={"Body"} />
+          )}
+          {state.mindGoal ? (
+            <GoalCard
+              goal={state.mindGoal}
+              onCompleted={(goal: Goal) => {
+                dispatch({ type: "COMPLETE_GOAL", goal: goal });
+              }}
+            />
+          ) : (
+            <NoGoalSet type={"Mind"} />
+          )}
+          {state.peopleGoal ? (
+            <GoalCard
+              goal={state.peopleGoal}
+              onCompleted={(goal: Goal) => {
+                dispatch({ type: "COMPLETE_GOAL", goal: goal });
+              }}
+            />
+          ) : (
+            <NoGoalSet type={"People"} />
+          )}
         </View>
-        <Pressable
+        <TouchableOpacity
           style={{
-            flexDirection: "row",
+            backgroundColor: "#A59AC8",
+            borderStartStartRadius: 30,
+            width: 80,
+            height: 75,
+            justifyContent: "center",
             alignItems: "center",
-            justifyContent: "space-between",
-            backgroundColor: "#fff",
-            borderRadius: 50,
-            paddingVertical: 10,
-            paddingLeft: 16,
-            paddingRight: 24,
-            gap: 8,
+            position: "absolute",
+            bottom: 0,
+            right: 0,
+          }}
+          onPress={() => {
+            router.push("/modal");
           }}
         >
-          <Svg width="24" height="25" viewBox="0 0 24 25" fill="none">
-            <Path
-              d="M9.00001 20.7089H4.5C4.30109 20.7089 4.11033 20.6299 3.96967 20.4892C3.82902 20.3486 3.75 20.1578 3.75 19.9589V15.7683C3.74966 15.6709 3.76853 15.5744 3.80553 15.4843C3.84253 15.3942 3.89694 15.3123 3.96563 15.2433L15.2156 3.99328C15.2854 3.92241 15.3686 3.86614 15.4603 3.82773C15.5521 3.78931 15.6505 3.76953 15.75 3.76953C15.8495 3.76953 15.9479 3.78931 16.0397 3.82773C16.1314 3.86614 16.2146 3.92241 16.2844 3.99328L20.4656 8.17453C20.5365 8.24431 20.5928 8.3275 20.6312 8.41924C20.6696 8.51098 20.6894 8.60944 20.6894 8.7089C20.6894 8.80836 20.6696 8.90682 20.6312 8.99856C20.5928 9.09031 20.5365 9.17349 20.4656 9.24328L9.00001 20.7089Z"
-              stroke="#5C5D72"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-            <Path
-              d="M20.25 20.709H9"
-              stroke="#5C5D72"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-            <Path
-              d="M12.75 6.45898L18 11.709"
-              stroke="#5C5D72"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </Svg>
-          <Text
-            style={{
-              fontSize: 18,
-              fontWeight: "500",
-            }}
-          >
-            Mood
-          </Text>
-        </Pressable>
+          <Feather name="plus" size={30} color="#1D1B20" />
+        </TouchableOpacity>
       </View>
     </View>
   );

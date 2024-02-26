@@ -1,5 +1,4 @@
 import { Stack, router } from "expo-router";
-import { Button } from "react-native";
 
 export default function Layout() {
   return (
@@ -10,7 +9,32 @@ export default function Layout() {
           headerShown: false,
         }}
         initialParams={{
-          initialRouter: true,
+          goals: [
+            {
+              id: "1",
+              icon: "🚿",
+              title: "Take a shower",
+              description: "This is a test goal",
+              type: "Body",
+              completed: false,
+            },
+            {
+              id: "2",
+              icon: "❤️",
+              title: "Put 5 items on vision board",
+              description: "This is a test goal 2",
+              type: "Mind",
+              completed: false,
+            },
+            {
+              id: "3",
+              icon: "❤️",
+              title: "Put 5 items on vision board",
+              description: "This is a test goal 2",
+              type: "People",
+              completed: false,
+            },
+          ],
         }}
       />
       <Stack.Screen
@@ -18,9 +42,8 @@ export default function Layout() {
         options={{
           // Set the presentation mode to modal for our modal route.
           presentation: "modal",
-          headerRight: () => (
-            <Button title="Done" onPress={() => router.back()} />
-          ),
+          headerShown: false,
+          contentStyle: { backgroundColor: "transparent", opacity: 0.99 },
         }}
       />
     </Stack>
