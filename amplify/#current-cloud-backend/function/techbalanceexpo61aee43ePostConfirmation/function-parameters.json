@@ -1,0 +1,16 @@
+{
+  "trigger": true,
+  "modules": [
+    "add-to-group"
+  ],
+  "parentResource": "techbalanceexpo61aee43e",
+  "functionName": "techbalanceexpo61aee43ePostConfirmation",
+  "resourceName": "techbalanceexpo61aee43ePostConfirmation",
+  "parentStack": "auth",
+  "triggerEnvs": "[]",
+  "triggerDir": "/snapshot/amplify-cli/build/node_modules/@aws-amplify/amplify-category-auth/provider-utils/awscloudformation/triggers/PostConfirmation",
+  "triggerTemplate": "PostConfirmation.json.ejs",
+  "triggerEventPath": "PostConfirmation.event.json",
+  "roleName": "techbalanceexpo61aee43ePostConfirmation",
+  "skipEdit": true
+}

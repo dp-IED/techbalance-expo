@@ -1,0 +1,6 @@
+{
+  "AppSyncApiName": "techbalanceexpo",
+  "DynamoDBBillingMode": "PAY_PER_REQUEST",
+  "DynamoDBEnableServerSideEncryption": false,
+  "AuthModeLastUpdated": "2024-02-17T13:01:05.689Z"
+}

@@ -1,0 +1,8 @@
+{
+    "AppSyncApiName": "techbalanceexpo",
+    "DynamoDBBillingMode": "PAY_PER_REQUEST",
+    "DynamoDBEnableServerSideEncryption": false,
+    "AuthModeLastUpdated": "2024-02-17T13:01:05.689Z",
+    "S3DeploymentBucket": "amplify-techbalanceexpo-dev-134953-deployment",
+    "S3DeploymentRootKey": "amplify-appsync-files/ceaa8fb6e92f62c7711cf4f8e2241c4f9cae1a05"
+}
