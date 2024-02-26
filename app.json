@@ -12,19 +12,43 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "*/"
+    ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.darenpal.techbalanceexpo"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.darenpal.techbalanceexpo"
     },
-    "plugins": ["expo-router"],
+    "web": {
+      "bundler": "metro",
+      "output": "server"
+    },
+    "plugins": [
+      [
+        "expo-router",
+        {
+          "origin": "https://techbalance-api.herokuapp.com"
+        }
+      ]
+    ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {
+        "origin": "https://techbalance-api.herokuapp.com"
+      },
+      "eas": {
+        "projectId": "2cbb799a-7d85-4bdc-ad99-941cfab1ebbe"
+      }
+    },
+    "owner": "darenpal"
   }
 }
