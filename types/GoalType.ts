@@ -1,1 +1,1 @@
-export type GoalType = "Body" | "Mind" | "People";
+export type GoalType = "Body" | "Self" | "People";

@@ -7,4 +7,5 @@ export type Goal = {
   description?: string;
   type: GoalType;
   completed: boolean;
+  time: string;
 };
