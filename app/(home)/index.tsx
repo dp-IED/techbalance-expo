@@ -3,20 +3,11 @@ import {
   View,
   SafeAreaView,
   Dimensions,
-  Button,
-  Pressable,
 } from "react-native";
-import { Feather } from "@expo/vector-icons";
-import Svg, { Circle, Defs, Stop, RadialGradient } from "react-native-svg";
 import GoalCard from "@/components/GoalCard";
 import React, { useEffect, useReducer, useState } from "react";
 import { Goal } from "@/types/Goal";
 import NoGoalSet from "@/components/NoGoalSet";
-import { AnimatedCircularProgress } from "react-native-circular-progress";
-import { Image } from "expo-image";
-import { Link } from "expo-router";
-import FeaturedCard from "@/components/FeaturedCard";
-import { ScrollView } from "react-native-gesture-handler";
 import AppBar from "@/components/AppBar";
 import CircularProgress from "@/components/CircularProgress";
 import TotalGoalsRow from "@/components/TotalGoalsRow";
@@ -174,115 +165,85 @@ export default function Home() {
   }, [state]);
 
   return (
-    <View style={{ flex: 1, position: "relative" }}>
-      <SafeAreaView style={SafeViewAndroid.AndroidSafeArea}>
-        <AppBar />
-        <View
-          style={{
-            alignItems: "center",
-          }}
-        >
-          <CircularProgress
-            completion={completion}
-            windowWidth={windowWidth}
-            windowHeight={windowHeight}
-          />
-        </View>
-
-        <View
-          style={{
-            // padding only container
-            // flex: 1,
-            paddingHorizontal: 20,
-            gap: windowHeight / 56,
-            // alignItems: "center",
-          }}
-        >
-          <TotalGoalsRow completion={completion} />
-
-          <View
-            style={{
-              width: "100%",
-              //   flex: 1,
-            }}
-          >
-            {state.bodyGoal ? (
-              <GoalCard
-                goal={state.bodyGoal}
-                windowHeight={windowHeight}
-                isLast={false}
-                onCompleted={(goal: Goal) => {
-                  dispatch({ type: "COMPLETE_GOAL", goal: goal });
-                }}
-              />
-            ) : (
-              <NoGoalSet type={"Body"} />
-            )}
-            {state.selfGoal ? (
-              <GoalCard
-                goal={state.selfGoal}
-                windowHeight={windowHeight}
-                isLast={false}
-                onCompleted={(goal: Goal) => {
-                  dispatch({ type: "COMPLETE_GOAL", goal: goal });
-                }}
-              />
-            ) : (
-              <NoGoalSet type={"Self"} />
-            )}
-            {state.peopleGoal ? (
-              <GoalCard
-                goal={state.peopleGoal}
-                windowHeight={windowHeight}
-                isLast={true}
-                onCompleted={(goal: Goal) => {
-                  dispatch({ type: "COMPLETE_GOAL", goal: goal });
-                }}
-              />
-            ) : (
-              <NoGoalSet type={"People"} />
-            )}
-          </View>
-          <Text
-            style={{
-              fontSize: 16,
-              fontFamily: "Rubik_500Medium",
-            }}
-          >
-            Featured
-          </Text>
-          {/* <FeaturedCard /> */}
-        </View>
-      </SafeAreaView>
-      {/* <Link
-        href="/modal"
-        style={{
-         
-        }}
-      > */}
+    <SafeAreaView style={SafeViewAndroid.AndroidSafeArea}>
+      <AppBar />
       <View
         style={{
-          // TODO: not sure if this is the best way to do this
-          // might need to think about this design more
-          height: 68,
-          width: 68,
-          backgroundColor: "#A59AC8",
-          position: "absolute",
-          right: 0,
-          bottom: 0,
-          marginBottom: 0,
-          marginRight: 0,
-          borderTopLeftRadius: 60,
-          justifyContent: "center",
           alignItems: "center",
         }}
       >
-        <Pressable onPress={() => {}}>
-          <Text style={{ fontSize: 32 }}>+</Text>
-        </Pressable>
+        <CircularProgress
+          completion={completion}
+          windowWidth={windowWidth}
+          windowHeight={windowHeight}
+        />
       </View>
-      {/* </Link> */}
-    </View>
+
+      <View
+        style={{
+          // padding only container
+          // flex: 1,
+          paddingHorizontal: 20,
+          gap: windowHeight / 56,
+          // alignItems: "center",
+        }}
+      >
+        <TotalGoalsRow completion={completion} />
+
+        <View
+          style={{
+            width: "100%",
+            //   flex: 1,
+          }}
+        >
+          {state.bodyGoal ? (
+            <GoalCard
+              goal={state.bodyGoal}
+              windowHeight={windowHeight}
+              isLast={false}
+              onCompleted={(goal: Goal) => {
+                dispatch({ type: "COMPLETE_GOAL", goal: goal });
+              }}
+            />
+          ) : (
+            <NoGoalSet type={"Body"} />
+          )}
+          {state.selfGoal ? (
+            <GoalCard
+              goal={state.selfGoal}
+              windowHeight={windowHeight}
+              isLast={false}
+              onCompleted={(goal: Goal) => {
+                dispatch({ type: "COMPLETE_GOAL", goal: goal });
+              }}
+            />
+          ) : (
+            <NoGoalSet type={"Self"} />
+          )}
+          {state.peopleGoal ? (
+            <GoalCard
+              goal={state.peopleGoal}
+              windowHeight={windowHeight}
+              isLast={true}
+              onCompleted={(goal: Goal) => {
+                dispatch({ type: "COMPLETE_GOAL", goal: goal });
+              }}
+            />
+          ) : (
+            <NoGoalSet type={"People"} />
+          )}
+        </View>
+        <Text
+          style={{
+            fontSize: 16,
+            fontFamily: "Rubik_500Medium",
+          }}
+        >
+          Featured
+        </Text>
+        {/* <FeaturedCard /> */}
+      </View>
+    </SafeAreaView>
   );
 }
 
