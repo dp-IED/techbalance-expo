@@ -7,7 +7,6 @@ const FeaturedCard = () => {
       style={{
         paddingRight: 12,
         paddingTop: 5,
-        paddingBottom: 5,
         width: "100%",
         backgroundColor: "#F0F0F0",
         flexDirection: "row",

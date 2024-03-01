@@ -2,15 +2,16 @@ import { View, Text, TouchableOpacity, Image } from "react-native";
 import Svg, { Circle, Path } from "react-native-svg";
 import { Goal } from "../types/Goal";
 
-const GoalCard = (props: { goal: Goal; onCompleted: (goal: Goal) => void }) => {
+const GoalCard = (props: { goal: Goal; onCompleted: (goal: Goal) => void ,windowHeight: number, isLast: boolean }) => {
   const { id, icon, title, type, completed } = props.goal;
 
   return (
     <View
       style={{
+        height: props.windowHeight / 10.1,
         paddingRight: 12,
         paddingLeft: 12,
-        padding: 5,
+        marginBottom: props.isLast ? 0 : props.windowHeight / 71,
         width: "100%",
         backgroundColor: "#DAD7E2",
         flexDirection: "row",
@@ -21,8 +22,13 @@ const GoalCard = (props: { goal: Goal; onCompleted: (goal: Goal) => void }) => {
       }}
     >
       {/* img and the link */}
-      <Image source={require("../assets/images/first_card_icon.png")} />
-  
+      <Image
+        source={{
+          uri: icon,
+        }}
+        style={{ width: 50, height: 50 }}
+      />
+
       <View
         style={{
           flex: 1,
