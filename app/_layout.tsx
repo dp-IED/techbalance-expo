@@ -1,8 +1,4 @@
-import {
-  SplashScreen,
-  // This example uses a basic Layout component, but you can use any Layout.
-  Slot,
-} from "expo-router";
+import { SplashScreen } from "expo-router";
 import { Drawer } from "expo-router/drawer";
 
 import {
@@ -27,6 +23,35 @@ import { useEffect } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 SplashScreen.preventAutoHideAsync();
+
+const UserCheck = () => {
+  // TODO: implement user check using supabase
+  return (
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <Drawer>
+        <Drawer.Screen
+          name="(home)" // This is the name of the page and must match the url from root
+          initialParams={{
+            initialRoute: true,
+          }}
+          options={{
+            drawerLabel: "Home",
+            headerShown: false,
+          }}
+        />
+        <Drawer.Screen
+          name="(resources)" // This is the name of the page and must match the url from root
+          options={{
+            drawerLabel: "Resources",
+            headerShown: true,
+            headerTitle: "Resources",
+            headerTintColor: "black",
+          }}
+        />
+      </Drawer>
+    </GestureHandlerRootView>
+  );
+};
 
 export default function Layout() {
   const [fontsLoaded, fontError] = useFonts({
@@ -59,29 +84,10 @@ export default function Layout() {
   }
 
   // Render the children routes now that all the assets are loaded.
+
+  SplashScreen.hideAsync();
+
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
-      <Drawer>
-        <Drawer.Screen
-          name="(home)" // This is the name of the page and must match the url from root
-          initialParams={{
-            initialRoute: true,
-          }}
-          options={{
-            drawerLabel: "Home",
-            headerShown: false,
-          }}
-        />
-        <Drawer.Screen
-          name="(resources)" // This is the name of the page and must match the url from root
-          options={{
-            drawerLabel: "Resources",
-            headerShown: true,
-            headerTitle: "Resources",
-            headerTintColor: "black",
-          }}
-        />
-      </Drawer>
-    </GestureHandlerRootView>
+    <UserCheck />
   );
 }
