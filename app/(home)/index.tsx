@@ -1,79 +1,55 @@
 import {
   Text,
   View,
-  Pressable,
-  TouchableOpacity,
   SafeAreaView,
+  Dimensions,
 } from "react-native";
-import { Feather } from "@expo/vector-icons";
-import Svg, {
-  Circle,
-  Defs,
-  Path,
-  Stop,
-  RadialGradient,
-} from "react-native-svg";
 import GoalCard from "@/components/GoalCard";
-import { Dimensions } from "react-native";
-import {
-  DrawerNavigationProp,
-  DrawerToggleButton,
-} from "@react-navigation/drawer";
-import { useCallback, useEffect, useReducer, useState } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import { Goal } from "@/types/Goal";
 import NoGoalSet from "@/components/NoGoalSet";
-import { AnimatedCircularProgress } from "react-native-circular-progress";
-import ButtonNormal from "@/components/ButtonNormal";
-import { Image } from "expo-image";
-import {
-  Link,
-  router,
-  useFocusEffect,
-  useLocalSearchParams,
-  usePathname,
-} from "expo-router";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-
-const fetchGoals: () => Promise<Goal[] | null> = async () => {
-  //const response = await fetch("/getGoals");
-  //const data = await response.json();
-  //return data.goals as Goal[];
-
-  // fetch from local storage, pass each json and convert to Goal type
-
-  const body = await AsyncStorage.getItem("body");
-  const mind = await AsyncStorage.getItem("mind");
-  const people = await AsyncStorage.getItem("people");
-
-  let goals: Goal[] = [];
-  for (const goal of [body, mind, people]) {
-    if (goal) {
-      goals.push(JSON.parse(goal));
-    }
-  }
-  return goals;
-};
+import AppBar from "@/components/AppBar";
+import CircularProgress from "@/components/CircularProgress";
+import TotalGoalsRow from "@/components/TotalGoalsRow";
+import SafeViewAndroid from "@/components/SafeViewAndroid";
 
 export default function Home() {
-  const { reload } = useLocalSearchParams();
-  const [goals, setGoals] = useState<Goal[] | null>(null);
-  useFocusEffect(
-    useCallback(() => {
-      console.log("fetching goals");
-      fetchGoals().then((data) => {
-        console.log(reload);
-        if (data) {
-          data.forEach((goal: Goal) => {
-            console.log(goal);
-            dispatch({ type: "ADD_GOAL", goal: goal }); // don't really like this but
-          });
-        }
-      });
-    }, [reload])
-  );
+  const props: {
+    goals: Goal[];
+  } = {
+    goals: [
+      {
+        id: "1",
+        icon: "https://i.ibb.co/pKxKH9p/Cone.png",
+        title: "Digital Detox",
+        description: "This is a test goal",
+        type: "Self",
+        completed: false,
+        time: "13:00 - 18:00",
+      },
+      {
+        id: "2",
+        icon: "https://i.ibb.co/M7cs1yk/Frame-2608646.png",
+        title: "Grab a coffee",
+        description: "This is a test goal 2",
+        type: "People",
+        completed: false,
+        time: "12:00",
+      },
+      {
+        id: "3",
+        icon: "https://i.ibb.co/GRkvtgd/Cube.png",
+        title: "Go for a walk",
+        description: "This is a test goal 2",
+        type: "Body",
+        completed: false,
+        time: "10:00",
+      },
+    ],
+  };
 
   type State = {
-    mindGoal: Goal | undefined;
+    selfGoal: Goal | undefined;
     bodyGoal: Goal | undefined;
     peopleGoal: Goal | undefined;
   };
@@ -95,40 +71,40 @@ export default function Home() {
     switch (action.type) {
       case "ADD_GOAL":
         switch (action.goal.type) {
-          case "Body":
+          case "Self":
             return {
               ...state,
-              bodyGoal: action.goal,
-            };
-          case "Mind":
-            return {
-              ...state,
-              mindGoal: action.goal,
+              selfGoal: action.goal,
             };
           case "People":
             return {
               ...state,
               peopleGoal: action.goal,
+            };
+          case "Body":
+            return {
+              ...state,
+              bodyGoal: action.goal,
             };
           default:
             return state;
         }
       case "UPDATE_GOAL":
         switch (action.goal.type) {
-          case "Body":
+          case "Self":
             return {
               ...state,
-              bodyGoal: action.goal,
-            };
-          case "Mind":
-            return {
-              ...state,
-              mindGoal: action.goal,
+              selfGoal: action.goal,
             };
           case "People":
             return {
               ...state,
               peopleGoal: action.goal,
+            };
+          case "Body":
+            return {
+              ...state,
+              bodyGoal: action.goal,
             };
           default:
             return state;
@@ -142,9 +118,9 @@ export default function Home() {
               AsyncStorage.removeItem("body");
               return {
                 ...state,
-                bodyGoal: {
-                  ...state.bodyGoal,
-                  completed: !state.bodyGoal.completed,
+                selfGoal: {
+                  ...state.selfGoal,
+                  completed: !state.selfGoal.completed,
                 },
               };
             }
@@ -152,12 +128,11 @@ export default function Home() {
           case "Mind":
             if (state.mindGoal) {
               AsyncStorage.removeItem("mind");
-
               return {
                 ...state,
-                mindGoal: {
-                  ...state.mindGoal,
-                  completed: !state.mindGoal.completed,
+                peopleGoal: {
+                  ...state.peopleGoal,
+                  completed: !state.peopleGoal.completed,
                 },
               };
             }
@@ -167,9 +142,9 @@ export default function Home() {
               AsyncStorage.removeItem("people");
               return {
                 ...state,
-                peopleGoal: {
-                  ...state.peopleGoal,
-                  completed: !state.peopleGoal.completed,
+                bodyGoal: {
+                  ...state.bodyGoal,
+                  completed: !state.bodyGoal.completed,
                 },
               };
             }
@@ -182,34 +157,25 @@ export default function Home() {
   };
 
   const [state, dispatch] = useReducer(reducer, initialState);
-
   const [completion, setCompletion] = useState(0);
+  const windowWidth = Dimensions.get("window").width;
+  const windowHeight = Dimensions.get("window").height;
 
   useEffect(() => {
     setCompletion(
       (state.bodyGoal?.completed ? 1 : 0) +
-        (state.mindGoal?.completed ? 1 : 0) +
+        (state.selfGoal?.completed ? 1 : 0) +
         (state.peopleGoal?.completed ? 1 : 0)
     );
   }, [state]);
 
   return (
-    <View
-      style={{
-        flex: 1,
-        backgroundColor: "#f7f7f7",
-        gap: 35,
-        marginTop: 60,
-      }}
-    >
-      {/*<SafeAreaView
+
+    <SafeAreaView style={SafeViewAndroid.AndroidSafeArea}>
+      <AppBar />
+      <View
         style={{
-          flex: 1,
-          backgroundColor: "#f7f7f7",
-          
-          marginBottom: 35,
-        }}
-      >*/}
+          alignItems: "center",
       {/* Might want to add this to the layout as a TopBar */}
       <View
         style={{
@@ -220,6 +186,76 @@ export default function Home() {
           paddingRight: 20,
         }}
       >
+        <CircularProgress
+          completion={completion}
+          windowWidth={windowWidth}
+          windowHeight={windowHeight}
+        />
+      </View>
+
+      <View
+        style={{
+          // padding only container
+          // flex: 1,
+          paddingHorizontal: 20,
+          gap: windowHeight / 56,
+          // alignItems: "center",
+        }}
+      >
+        <TotalGoalsRow completion={completion} />
+
+        <View
+          style={{
+            width: "100%",
+            //   flex: 1,
+          }}
+        >
+          {state.bodyGoal ? (
+            <GoalCard
+              goal={state.bodyGoal}
+              windowHeight={windowHeight}
+              isLast={false}
+              onCompleted={(goal: Goal) => {
+                dispatch({ type: "COMPLETE_GOAL", goal: goal });
+              }}
+            />
+          ) : (
+            <NoGoalSet type={"Body"} />
+          )}
+          {state.selfGoal ? (
+            <GoalCard
+              goal={state.selfGoal}
+              windowHeight={windowHeight}
+              isLast={false}
+              onCompleted={(goal: Goal) => {
+                dispatch({ type: "COMPLETE_GOAL", goal: goal });
+              }}
+            />
+          ) : (
+            <NoGoalSet type={"Self"} />
+          )}
+          {state.peopleGoal ? (
+            <GoalCard
+              goal={state.peopleGoal}
+              windowHeight={windowHeight}
+              isLast={true}
+              onCompleted={(goal: Goal) => {
+                dispatch({ type: "COMPLETE_GOAL", goal: goal });
+              }}
+            />
+          ) : (
+            <NoGoalSet type={"People"} />
+          )}
+        </View>
+        <Text
+          style={{
+            fontSize: 16,
+            fontFamily: "Rubik_500Medium",
+          }}
+        >
+          Featured
+        </Text>
+        {/* <FeaturedCard /> */}
         <DrawerToggleButton tintColor="black" />
         <Text
           style={{
@@ -427,6 +463,6 @@ export default function Home() {
           <Feather name="plus" size={30} color="#1D1B20" />
         </TouchableOpacity>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }

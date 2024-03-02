@@ -9,4 +9,5 @@ export type Goal = {
   notify?: boolean;
   type: GoalType;
   completed: boolean;
+  time: string;
 };
