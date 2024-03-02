@@ -1,95 +1,91 @@
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, Image } from "react-native";
 import Svg, { Circle, Path } from "react-native-svg";
 import { Goal } from "../types/Goal";
 
-const GoalCard = (props: { goal: Goal; onCompleted: (goal: Goal) => void }) => {
+const GoalCard = (props: { goal: Goal; onCompleted: (goal: Goal) => void ,windowHeight: number, isLast: boolean }) => {
   const { id, icon, title, type, completed } = props.goal;
 
   return (
     <View
       style={{
+        height: props.windowHeight / 10.1,
+        paddingRight: 12,
+        paddingLeft: 12,
+        marginBottom: props.isLast ? 0 : props.windowHeight / 71,
+        width: "100%",
+        backgroundColor: "#DAD7E2",
         flexDirection: "row",
         alignItems: "center",
-        justifyContent: "space-between",
-        width: 352,
-        gap: 10,
+        borderRadius: 12,
+        gap: 3,
+        opacity: completed ? 0.5 : 1,
       }}
     >
-      <TouchableOpacity onPress={() => props.onCompleted(props.goal)}>
-        {completed ? (
-          <Svg width="35" height="35" viewBox="0 0 35 35" fill="none">
-            <Circle
-              cx="17.5"
-              cy="17.459"
-              r="16"
-              fill="#A59AC8"
-              stroke="white"
-              stroke-width="2"
-            />
-            <Path
-              d="M15.5002 21.6288L11.3302 17.4588L9.91016 18.8688L15.5002 24.4588L27.5002 12.4588L26.0902 11.0488L15.5002 21.6288Z"
-              fill="white"
-            />
-          </Svg>
-        ) : (
-          <Svg width="35" height="35" viewBox="0 0 35 35" fill="none" id={id}>
-            <Circle
-              cx="17.5"
-              cy="17.459"
-              r="16"
-              fill="white"
-              stroke="#A59AC8"
-              stroke-width="2"
-            />
-          </Svg>
-        )}
-      </TouchableOpacity>
+      {/* img and the link */}
+      <Image
+        source={{
+          uri: icon,
+        }}
+        style={{ width: 50, height: 50 }}
+      />
+
       <View
         style={{
-          width: 320,
-          backgroundColor: "#DAD7E2",
-          flexDirection: "row",
-          alignItems: "center",
-          borderRadius: 12,
-          gap: 3,
+          flex: 1,
+          flexDirection: "column",
+          padding: 12,
         }}
       >
         <Text
           style={{
-            fontSize: 35,
-            paddingVertical: 27,
-            paddingHorizontal: 9,
+            fontFamily: "Rubik_500Medium",
+            fontSize: 16,
+            padding: 4,
+            maxWidth: 200,
           }}
         >
-          {icon}
+          {title}
         </Text>
-        <View
+        <Text
           style={{
-            flex: 1,
-            flexDirection: "column",
-            padding: 8,
+            fontFamily: "Rubik_400Regular",
+            fontSize: 14,
+            padding: 4,
           }}
         >
-          <Text
-            style={{
-              fontWeight: "500",
-              fontSize: 16,
-              padding: 8,
-              maxWidth: 200,
-            }}
-          >
-            {title}
-          </Text>
-          <Text
-            style={{
-              fontSize: 14,
-              padding: 8,
-            }}
-          >
-            {type}
-          </Text>
-        </View>
+          {type}
+        </Text>
       </View>
+      <TouchableOpacity onPress={() => props.onCompleted(props.goal)}>
+        <View style={{ opacity: completed ? 0.5 : 1 }}>
+          {completed ? (
+            <Svg width="35" height="35" viewBox="0 0 35 35" fill="none">
+              <Circle
+                cx="17.5"
+                cy="17.459"
+                r="16"
+                fill="#8FBCF0"
+                stroke="white"
+                stroke-width="2"
+              />
+              <Path
+                d="M15.5002 21.6288L11.3302 17.4588L9.91016 18.8688L15.5002 24.4588L27.5002 12.4588L26.0902 11.0488L15.5002 21.6288Z"
+                fill="white"
+              />
+            </Svg>
+          ) : (
+            <Svg width="35" height="35" viewBox="0 0 35 35" fill="none" id={id}>
+              <Circle
+                cx="17.5"
+                cy="17.459"
+                r="16"
+                fill="white"
+                stroke-width="2"
+              />
+            </Svg>
+          )}
+        </View>
+      </TouchableOpacity>
     </View>
   );
 };
