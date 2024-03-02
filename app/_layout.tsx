@@ -1,5 +1,4 @@
-import { SplashScreen } from "expo-router";
-import { Drawer } from "expo-router/drawer";
+import { Redirect, Slot, SplashScreen } from "expo-router";
 
 import {
   useFonts,
@@ -19,41 +18,12 @@ import {
   Rubik_900Black_Italic,
 } from "@expo-google-fonts/rubik";
 
-import { useEffect } from "react";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { useContext, useEffect } from "react";
+import { AuthContext, AuthProvider } from "@/ctx/AuthProvider";
 
 SplashScreen.preventAutoHideAsync();
 
-const UserCheck = () => {
-  // TODO: implement user check using supabase
-  return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
-      <Drawer>
-        <Drawer.Screen
-          name="(home)" // This is the name of the page and must match the url from root
-          initialParams={{
-            initialRoute: true,
-          }}
-          options={{
-            drawerLabel: "Home",
-            headerShown: false,
-          }}
-        />
-        <Drawer.Screen
-          name="(resources)" // This is the name of the page and must match the url from root
-          options={{
-            drawerLabel: "Resources",
-            headerShown: true,
-            headerTitle: "Resources",
-            headerTintColor: "black",
-          }}
-        />
-      </Drawer>
-    </GestureHandlerRootView>
-  );
-};
-
-export default function Layout() {
+export default function Root() {
   const [fontsLoaded, fontError] = useFonts({
     Rubik_300Light,
     Rubik_400Regular,
@@ -88,6 +58,8 @@ export default function Layout() {
   SplashScreen.hideAsync();
 
   return (
-    <UserCheck />
+    <AuthProvider>
+      <Slot />
+    </AuthProvider>
   );
 }

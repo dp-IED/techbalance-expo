@@ -5,7 +5,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { Link, router, useRouter } from "expo-router";
+import { Link } from "expo-router";
 import { useReducer } from "react";
 import { Text } from "@/components/Themed";
 import { Goal } from "@/types/Goal";
@@ -34,7 +34,17 @@ function saveToDB(goal: Goal) {
     ...goal,
     reminderTime: goal.reminderTime ? goal.reminderTime.toISOString() : null,
   };
-  supabase.from("users").update({ goals: input }).eq("id", 1);
+
+  supabase
+    .from("Users")
+    .update({ goals: input })
+    .eq("id", "9e58377a-1c79-4caf-807e-99c06c49f117")
+    .then((data) => {
+      if (data.error) {
+        console.log("Error updating user: ", data.error);
+      }
+    });
+  // TODO: replace with actual user id
 }
 
 export default function Modal() {

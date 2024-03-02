@@ -8,34 +8,6 @@ export default function Layout() {
         options={{
           headerShown: false,
         }}
-        initialParams={{
-          goals: [
-            {
-              id: "1",
-              icon: "🚿",
-              title: "Take a shower",
-              description: "This is a test goal",
-              type: "Body",
-              completed: false,
-            },
-            {
-              id: "2",
-              icon: "❤️",
-              title: "Put 5 items on vision board",
-              description: "This is a test goal 2",
-              type: "Mind",
-              completed: false,
-            },
-            {
-              id: "3",
-              icon: "❤️",
-              title: "Put 5 items on vision board",
-              description: "This is a test goal 2",
-              type: "People",
-              completed: false,
-            },
-          ],
-        }}
       />
       <Stack.Screen
         name="modal"
