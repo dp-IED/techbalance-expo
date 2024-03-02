@@ -33,10 +33,6 @@ import {
   usePathname,
 } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { generateClient } from "@aws-amplify/api";
-import { listGoals } from "@/src/graphql/queries";
-
-const client = generateClient();
 
 const fetchGoals: () => Promise<Goal[] | null> = async () => {
   //const response = await fetch("/getGoals");
@@ -57,19 +53,6 @@ const fetchGoals: () => Promise<Goal[] | null> = async () => {
   }
   return goals;
 };
-
-async function fetchGoalsAmplify() {
-  try {
-    const todoData = await client.graphql({
-      query: listGoals,
-    });
-    const goals = todoData.data.listGoals.items as Goal[];
-    return goals;
-  } catch (err) {
-    console.log("error fetching goals");
-    return null;
-  }
-}
 
 export default function Home() {
   const { reload } = useLocalSearchParams();
@@ -323,14 +306,7 @@ export default function Home() {
                     r="134.23"
                     fill="url(#grad)"
                   />
-                  <View
-                    style={{
-                      justifyContent: "center",
-                      alignItems: "center",
-                      // weird this doesn't work
-                      zIndex: 100,
-                    }}
-                  >
+                  <View style={{}}>
                     <Image
                       source={require("../../assets/images/progress_poly.png")}
                       style={{
