@@ -1,4 +1,10 @@
-import { Text, View, SafeAreaView, Dimensions } from "react-native";
+import {
+  Text,
+  View,
+  SafeAreaView,
+  Dimensions,
+  ActivityIndicator,
+} from "react-native";
 import GoalCard from "@/components/GoalCard";
 import React, { useEffect, useReducer, useState } from "react";
 import { Goal } from "@/types/Goal";
@@ -7,7 +13,7 @@ import AppBar from "@/components/AppBar";
 import CircularProgress from "@/components/CircularProgress";
 import TotalGoalsRow from "@/components/TotalGoalsRow";
 import SafeViewAndroid from "@/components/SafeViewAndroid";
-import FeaturedCard from "@/components/FeaturedCard";
+import ShadowScreenGradient from "@/components/ShadowScreenGradient";
 
 export default function Home() {
   const props: {
@@ -43,6 +49,12 @@ export default function Home() {
       },
     ],
   };
+
+  const [data, setData] = useState<Goal[]>([]);
+  const [completion, setCompletion] = useState(0);
+  const windowWidth = Dimensions.get("window").width;
+  const windowHeight = Dimensions.get("window").height;
+  const [isLoading, setLoading] = useState(true);
 
   type State = {
     selfGoal: Goal | undefined;
@@ -148,9 +160,33 @@ export default function Home() {
   };
 
   const [state, dispatch] = useReducer(reducer, initialState);
-  const [completion, setCompletion] = useState(0);
-  const windowWidth = Dimensions.get("window").width;
-  const windowHeight = Dimensions.get("window").height;
+
+  // to split
+  const getGoals = async () => {
+    const url = "https://65e20096a8583365b317c6e1.mockapi.io/goals";
+    try {
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      });
+      // await new Promise((resolve) => setTimeout(resolve, 2000)); // sleep for 2s
+      const listOfGoals = (await response.json()) as [Goal];
+      //console.log(listOfGoals[0].icon);
+      setData(listOfGoals);
+    } catch (error) {
+      // todo: handle error
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getGoals();
+  }, []);
 
   useEffect(() => {
     setCompletion(
@@ -162,6 +198,7 @@ export default function Home() {
 
   return (
     <SafeAreaView style={SafeViewAndroid.AndroidSafeArea}>
+      <ShadowScreenGradient />
       <AppBar />
       <View
         style={{
@@ -189,44 +226,49 @@ export default function Home() {
         <View
           style={{
             width: "100%",
-            //   flex: 1,
           }}
         >
-          {state.bodyGoal ? (
-            <GoalCard
-              goal={state.bodyGoal}
-              windowHeight={windowHeight}
-              isLast={false}
-              onCompleted={(goal: Goal) => {
-                dispatch({ type: "COMPLETE_GOAL", goal: goal });
-              }}
-            />
+          {isLoading ? (
+            <ActivityIndicator />
           ) : (
-            <NoGoalSet type={"Body"} />
-          )}
-          {state.selfGoal ? (
-            <GoalCard
-              goal={state.selfGoal}
-              windowHeight={windowHeight}
-              isLast={false}
-              onCompleted={(goal: Goal) => {
-                dispatch({ type: "COMPLETE_GOAL", goal: goal });
-              }}
-            />
-          ) : (
-            <NoGoalSet type={"Self"} />
-          )}
-          {state.peopleGoal ? (
-            <GoalCard
-              goal={state.peopleGoal}
-              windowHeight={windowHeight}
-              isLast={true}
-              onCompleted={(goal: Goal) => {
-                dispatch({ type: "COMPLETE_GOAL", goal: goal });
-              }}
-            />
-          ) : (
-            <NoGoalSet type={"People"} />
+            <>
+              {state.bodyGoal ? (
+                <GoalCard
+                  goal={state.bodyGoal}
+                  windowHeight={windowHeight}
+                  isLast={false}
+                  onCompleted={(goal: Goal) => {
+                    dispatch({ type: "COMPLETE_GOAL", goal: goal });
+                  }}
+                />
+              ) : (
+                <NoGoalSet type={"Body"} />
+              )}
+              {state.selfGoal ? (
+                <GoalCard
+                  goal={state.selfGoal}
+                  windowHeight={windowHeight}
+                  isLast={false}
+                  onCompleted={(goal: Goal) => {
+                    dispatch({ type: "COMPLETE_GOAL", goal: goal });
+                  }}
+                />
+              ) : (
+                <NoGoalSet type={"Self"} />
+              )}
+              {state.peopleGoal ? (
+                <GoalCard
+                  goal={state.peopleGoal}
+                  windowHeight={windowHeight}
+                  isLast={true}
+                  onCompleted={(goal: Goal) => {
+                    dispatch({ type: "COMPLETE_GOAL", goal: goal });
+                  }}
+                />
+              ) : (
+                <NoGoalSet type={"People"} />
+              )}
+            </>
           )}
         </View>
         <Text
@@ -235,9 +277,9 @@ export default function Home() {
             fontFamily: "Rubik_500Medium",
           }}
         >
-          Featured
+          Today's Mood
         </Text>
-        <FeaturedCard />
+        {/* <FeaturedCard /> */}
       </View>
     </SafeAreaView>
   );
