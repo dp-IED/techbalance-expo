@@ -26,7 +26,7 @@ const Landing: React.FC<LandingProps> = ({
 }) => {
 	const fadeAnim = useRef(new Animated.Value(0)).current;
 
-    // animation effect
+	// animation effect
 	useEffect(() => {
 		Animated.timing(fadeAnim, {
 			toValue: 1,
@@ -38,10 +38,10 @@ const Landing: React.FC<LandingProps> = ({
 	return (
 		<SafeAreaView style={styles.container}>
 			<Text style={styles.headerText}>{headerText}</Text>
-            {/* rendering image or placeholder based on props */}
+			{/* rendering image or placeholder based on props */}
 			{imageURL !== "" ? (
 				<Animated.Image
-                    source={imageURL}
+					source={imageURL}
 					style={[styles.img, { opacity: fadeAnim }]}
 				/>
 			) : (
@@ -72,8 +72,8 @@ const styles = StyleSheet.create({
 	},
 	img: {
 		marginBottom: 20,
-        width: 200,
-        height: 200
+		width: 200,
+		height: 200,
 	},
 	buttonContainer: {
 		marginTop: 20,
