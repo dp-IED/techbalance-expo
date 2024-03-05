@@ -14,6 +14,7 @@ import CircularProgress from "@/components/CircularProgress";
 import TotalGoalsRow from "@/components/TotalGoalsRow";
 import SafeViewAndroid from "@/components/SafeViewAndroid";
 import ShadowScreenGradient from "@/components/ShadowScreenGradient";
+import HomeMoodBar from "@/components/HomeMoodBar";
 
 export default function Home() {
   const props: {
@@ -279,7 +280,7 @@ export default function Home() {
         >
           Today's Mood
         </Text>
-        {/* <FeaturedCard /> */}
+        <HomeMoodBar />
       </View>
     </SafeAreaView>
   );
