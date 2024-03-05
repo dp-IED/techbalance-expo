@@ -15,7 +15,7 @@ const CircularProgress = (props: {
       fill={(props.completion / 3) * 100 + 0.5}
       rotation={0}
       lineCap="round"
-      tintColor="#D1E3F8"
+      tintColor="#D5CEE8"
       backgroundColor="#fff"
       children={() => (
         <View

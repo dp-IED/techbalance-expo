@@ -2,7 +2,12 @@ import { View, Text, TouchableOpacity, Image } from "react-native";
 import Svg, { Circle, Path } from "react-native-svg";
 import { Goal } from "../types/Goal";
 
-const GoalCard = (props: { goal: Goal; onCompleted: (goal: Goal) => void ,windowHeight: number, isLast: boolean }) => {
+const GoalCard = (props: {
+  goal: Goal;
+  onCompleted: (goal: Goal) => void;
+  windowHeight: number;
+  isLast: boolean;
+}) => {
   const { id, icon, title, type, completed } = props.goal;
 
   return (
@@ -64,7 +69,7 @@ const GoalCard = (props: { goal: Goal; onCompleted: (goal: Goal) => void ,window
                 cx="17.5"
                 cy="17.459"
                 r="16"
-                fill="#8FBCF0"
+                fill="#9F92C7"
                 stroke="white"
                 stroke-width="2"
               />

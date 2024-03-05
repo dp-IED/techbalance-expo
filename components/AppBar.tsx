@@ -1,5 +1,7 @@
 import React from "react";
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, Dimensions } from "react-native";
+import HomeFireButton from "./HomeFireButton";
+import HomeNotificatinButton from "./HomeNotificationButton";
 
 const AppBar = () => {
   return (
@@ -9,8 +11,7 @@ const AppBar = () => {
         gap: 20,
         alignItems: "center",
         justifyContent: "space-between",
-        paddingLeft: 30,
-        paddingRight: 44,
+        paddingHorizontal: 20,
       }}
     >
       <Text
@@ -27,17 +28,12 @@ const AppBar = () => {
           flex: 1,
           flexDirection: "row",
           justifyContent: "flex-end",
-          gap: 5,
+          gap: 15,
           alignItems: "center",
         }}
       >
-        <Image
-          source={require("../assets/images/fire_icon.png")}
-          style={{
-            height: 30,
-            width: 30,
-          }}
-        />
+        <HomeFireButton />
+        <HomeNotificatinButton />
       </View>
     </View>
   );
