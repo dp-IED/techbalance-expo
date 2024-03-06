@@ -48,11 +48,11 @@ export default function Layout() {
 			) : (
 				<Landing
 					setShowTabs={setShowTabs}
-					headerText="Welocme To Tech Balance"
+					headerText="Welcome To Tech Balance"
 					actionText="Continue"
 					onPressAction={() => setShowTabs(true)}
 					// imageURL={require("../../assets/images/progress_poly.png")}
-					imageURL=""
+					imageURL={null}
 				/>
 			)}
 		</>

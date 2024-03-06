@@ -39,7 +39,7 @@ const Landing: React.FC<LandingProps> = ({
 		<SafeAreaView style={styles.container}>
 			<Text style={styles.headerText}>{headerText}</Text>
 			{/* rendering image or placeholder based on props */}
-			{imageURL !== "" ? (
+			{imageURL !== null ? (
 				<Animated.Image
 					source={imageURL}
 					style={[styles.img, { opacity: fadeAnim }]}
