@@ -1,5 +1,6 @@
+import { supabase } from "@/scripts/initSupabase";
 import React from "react";
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, Pressable } from "react-native";
 
 const AppBar = () => {
   return (
@@ -31,6 +32,41 @@ const AppBar = () => {
           alignItems: "center",
         }}
       >
+        <Pressable
+          style={{
+            height: 30,
+            width: 30,
+            borderRadius: 15,
+            backgroundColor: "blue",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+          onPress={async () => {
+            const user = await supabase.auth.getUser();
+            const token = await supabase
+              .from("Users")
+              .select("expo_push_token")
+              .eq("id", user.data.user?.id);
+
+            if (token.data == null) {
+              alert("No push token found");
+              return;
+            }
+
+            const res = await fetch("https://exp.host/--/api/v2/push/send", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${process.env.EXPO_PUBLIC_ACCESS_TOKEN}`,
+              },
+              body: JSON.stringify({
+                to: token.data[0].expo_push_token,
+                sound: "default",
+                body: "Test notification",
+              }),
+            }).then((res) => res);
+          }}
+        />
         <Image
           source={require("../assets/images/fire_icon.png")}
           style={{
