@@ -1,7 +1,14 @@
 import React from "react";
 import { View, Image } from "react-native";
 import { AnimatedCircularProgress } from "react-native-circular-progress";
-import Svg, { Circle, Defs, RadialGradient, Stop } from "react-native-svg";
+import {
+  Circle,
+  Svg,
+  Defs,
+  RadialGradient,
+  Stop,
+  Rect,
+} from "react-native-svg";
 
 const CircularProgress = (props: {
   completion: number;
@@ -43,9 +50,6 @@ const CircularProgress = (props: {
       ></AnimatedCircularProgress>
       <View
         style={{
-          //  width: 200,
-          // height: 300,
-          // borderRadius: 100,
           alignItems: "center",
           justifyContent: "center",
           position: "absolute",
@@ -53,9 +57,7 @@ const CircularProgress = (props: {
       >
         <View
           style={{
-            position: "absolute",
-            // top: props.windowHeight / 9,
-            // left: props.windowHeight / 9,
+            // position: "absolute",
           }}
         >
           <Image
