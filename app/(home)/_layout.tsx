@@ -1,23 +1,55 @@
-import { Stack, router } from "expo-router";
+import { Stack, Tabs } from "expo-router";
 
 export default function Layout() {
   return (
-    <Stack>
-      <Stack.Screen
+    <Tabs>
+      <Tabs.Screen
         name="index"
         options={{
+          tabBarLabel: "Sign Up",
           headerShown: false,
+          tabBarLabelPosition: "beside-icon",
+          // hide the icon for the tab
+          tabBarIconStyle: {
+            display: "none",
+          },
         }}
       />
-      <Stack.Screen
-        name="modal"
+      <Tabs.Screen
+        name="second"
         options={{
-          // Set the presentation mode to modal for our modal route.
-          presentation: "modal",
+          tabBarLabel: "Second",
           headerShown: false,
-          contentStyle: { backgroundColor: "transparent", opacity: 0.99 },
+          tabBarLabelPosition: "beside-icon",
+          // hide the icon for the tab
+          tabBarIconStyle: {
+            display: "none",
+          },
         }}
       />
-    </Stack>
+      <Tabs.Screen
+        name="third"
+        options={{
+          tabBarLabel: "Third",
+          headerShown: false,
+          tabBarLabelPosition: "beside-icon",
+          // hide the icon for the tab
+          tabBarIconStyle: {
+            display: "none",
+          },
+        }}
+      />
+    </Tabs>
   );
+}
+
+{
+  /* <Stack>
+  <Stack.Screen
+    name="index"
+    options={{
+      headerShown: false,
+    }}
+  />
+</Stack>; */
 }
