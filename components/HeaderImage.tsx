@@ -14,7 +14,7 @@ export const HeaderImage = () => {
           "rgba(255, 255, 255, 0)",
           "rgba(255, 255, 255, 0.124)",
           "rgba(255, 255, 255, 0.6919)",
-          "#f2f2f2",
+          "#ffffff",
         ]}
         start={{ x: 0, y: 0 }}
         end={{ x: 0, y: 0.9 }}
