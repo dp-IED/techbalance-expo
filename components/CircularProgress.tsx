@@ -1,14 +1,7 @@
 import React from "react";
 import { View, Image } from "react-native";
 import { AnimatedCircularProgress } from "react-native-circular-progress";
-import {
-  Circle,
-  Svg,
-  Defs,
-  RadialGradient,
-  Stop,
-  Rect,
-} from "react-native-svg";
+import { Circle, Svg, Defs, RadialGradient, Stop } from "react-native-svg";
 
 const CircularProgress = (props: {
   completion: number;
@@ -34,8 +27,8 @@ const CircularProgress = (props: {
             fy="50%"
             gradientUnits="userSpaceOnUse"
           >
-            <Stop offset="0%" stopColor="#BFB8D6" stopOpacity="0" />
-            <Stop offset="100%" stopColor="#F4F7F7" stopOpacity="1" />
+            <Stop offset="0%" stopColor="#B3ADCD" stopOpacity="1" />
+            <Stop offset="100%" stopColor="#ffffff" stopOpacity="1" />
           </RadialGradient>
         </Defs>
         <Circle cx="120" cy="120" r="120" fill="url(#grad)" />
@@ -56,9 +49,11 @@ const CircularProgress = (props: {
         }}
       >
         <View
-          style={{
-            // position: "absolute",
-          }}
+          style={
+            {
+              // position: "absolute",
+            }
+          }
         >
           <Image
             source={require("../assets/images/progress_poly.png")}
