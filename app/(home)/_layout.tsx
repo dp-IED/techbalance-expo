@@ -1,4 +1,5 @@
 import { Stack, Tabs } from "expo-router";
+import { View, Image } from "react-native";
 
 export default function Layout() {
   return (
@@ -6,36 +7,42 @@ export default function Layout() {
       <Tabs.Screen
         name="index"
         options={{
-          tabBarLabel: "Sign Up",
           headerShown: false,
-          tabBarLabelPosition: "beside-icon",
-          // hide the icon for the tab
-          tabBarIconStyle: {
-            display: "none",
+          tabBarShowLabel: false,
+          tabBarIcon: ({ focused }) => {
+            return (
+              <Image
+                source={require("../../assets/images/globe_nav_icon.png")}
+              />
+            );
           },
         }}
       />
       <Tabs.Screen
         name="second"
         options={{
-          tabBarLabel: "Second",
           headerShown: false,
-          tabBarLabelPosition: "beside-icon",
-          // hide the icon for the tab
-          tabBarIconStyle: {
-            display: "none",
+          tabBarShowLabel: false,
+          tabBarIcon: ({ focused }) => {
+            return (
+              <Image
+                source={require("../../assets/images/statistics_nav_icon.png")}
+              />
+            );
           },
         }}
       />
       <Tabs.Screen
         name="third"
         options={{
-          tabBarLabel: "Third",
           headerShown: false,
-          tabBarLabelPosition: "beside-icon",
-          // hide the icon for the tab
-          tabBarIconStyle: {
-            display: "none",
+          tabBarShowLabel: false,
+          tabBarIcon: ({ focused }) => {
+            return (
+              <Image
+                source={require("../../assets/images/profile_nav_icon.png")}
+              />
+            );
           },
         }}
       />

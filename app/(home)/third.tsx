@@ -22,7 +22,7 @@ export default function Second() {
           alignItems: "center",
         }}
       >
-        <Text>Second</Text>
+        <Text>third</Text>
       </View>
     </SafeAreaView>
   );
