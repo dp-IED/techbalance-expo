@@ -13,7 +13,7 @@ const GoalCard = (props: {
   return (
     <View
       style={{
-        height: props.windowHeight / 10.1,
+        height: props.windowHeight / 10,
         paddingRight: 12,
         paddingLeft: 12,
         marginBottom: props.isLast ? 0 : props.windowHeight / 100,
@@ -22,7 +22,6 @@ const GoalCard = (props: {
         flexDirection: "row",
         alignItems: "center",
         borderRadius: 12,
-        gap: 3,
         opacity: completed ? 0.5 : 1,
       }}
     >
