@@ -34,7 +34,7 @@ export default function Home() {
       {
         id: "2",
         icon: "https://i.ibb.co/M7cs1yk/Frame-2608646.png",
-        title: "Grab a coffee",
+        title: "Coffee with a friend",
         description: "This is a test goal 2",
         type: "People",
         completed: false,
