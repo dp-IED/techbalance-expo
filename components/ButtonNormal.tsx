@@ -26,14 +26,14 @@ const ButtonNormal = ({
       shadowRadius: 1,
       elevation: 1,
 
-      padding: 10,
+      paddingHorizontal: 80,
+      paddingVertical: 10,
       borderRadius: 30,
 
       borderColor: "#5C5D72",
       borderWidth: active ? 0 : 1,
 
       display: "flex",
-      width: 120,
       height: 40,
       justifyContent: "center",
       alignItems: "center",
