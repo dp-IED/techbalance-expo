@@ -1,6 +1,6 @@
 import { router } from "expo-router";
 import React from "react";
-import { View, Text, Image, TouchableOpacity, Pressable } from "react-native";
+import { View, Text, Image, TouchableOpacity } from "react-native";
 
 const HomeFireButton = () => {
   return (
