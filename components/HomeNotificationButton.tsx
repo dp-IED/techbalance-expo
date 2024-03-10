@@ -7,7 +7,7 @@ const HomeNotificatinButton = () => {
     <View>
       <TouchableOpacity
         onPress={() => {
-          router.push("/(notification)");
+          router.push("/(mood)");
         }}
       >
         <Image
