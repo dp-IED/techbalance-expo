@@ -51,10 +51,7 @@ const index = () => {
 		<SafeAreaView style={SafeViewAndroid.AndroidSafeArea}>
 			<LinearGradient
 				style={styles.gradient}
-				colors={[
-					interpolatedColor,
-					"transparent"
-				]}
+				colors={[interpolatedColor, "transparent"]}
 				// dynamically change positions of linear gradient
 				start={{ x: circleRadius / 10, y: circleRadius / 10 }}
 				end={{ x: 1 - circleRadius / 10, y: 1 - circleRadius / 10 }}
@@ -65,6 +62,7 @@ const index = () => {
 				</TouchableOpacity>
 				<View>
 					<Svg height={deviceWidth + 50} width={deviceWidth}>
+						{/* Color gradient */}
 						<Defs>
 							<RadialGradient
 								id="grad"
@@ -94,6 +92,7 @@ const index = () => {
 							fill="url(#grad)"
 							fillOpacity="0.2"
 						/>
+						{/* circles of animation */}
 						<Circle
 							cx={deviceWidth / 2}
 							cy={deviceWidth / 2 + 25}
@@ -120,7 +119,7 @@ const index = () => {
 							fillOpacity="0.8"
 						/>
 					</Svg>
-					<Text style={styles.circleText}>How do you feel?</Text>
+					<Text style={styles.headerText}>How do you feel?</Text>
 				</View>
 				{/* slider */}
 				<Slider
@@ -135,7 +134,6 @@ const index = () => {
 					thumbStyle={styles.thumbStyle}
 					trackStyle={{ height: 10, borderRadius: 5 }}
 				/>
-
 				<View style={styles.emojiContainer}>
 					<Entypo name="emoji-sad" size={24} color="grey" />
 					<Entypo name="emoji-happy" size={24} color="grey" />
@@ -179,7 +177,7 @@ const styles = StyleSheet.create({
 		height: 40,
 		width: "80%",
 	},
-	circleText: {
+	headerText: {
 		position: "absolute",
 		top: "20%",
 		left: "30%",
