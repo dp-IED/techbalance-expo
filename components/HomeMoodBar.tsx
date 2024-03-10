@@ -26,8 +26,8 @@ const HomeMoodBar = () => {
           borderRadius: 20,
         }}
         thumbTintColor="transparent"
-        minimumTrackTintColor="#D2D0DC"
-        maximumTrackTintColor="#E3E8EF"
+        minimumTrackTintColor="#DFDAEC"
+        maximumTrackTintColor="#F6F5FA"
       />
     </View>
   );
