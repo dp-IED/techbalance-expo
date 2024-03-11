@@ -1,36 +1,37 @@
-import { TouchableOpacity } from "react-native";
+import { TouchableOpacity, StyleSheet } from "react-native";
 import { View, Text } from "./Themed";
 import { router } from "expo-router";
 
 const HomePlusButton = (props: { widht: number; height: number }) => {
+  const { widht, height } = props;
+
   return (
     <TouchableOpacity
-    onPress={() => {
-      router.push("/(notification)"); // change path to mood check-in
-    }}
-    >
-    <View
-      style={{
-        height: props.height,
-        width: props.widht,
-        backgroundColor: "#DFDAEC",
-        borderRadius: 12,
-        justifyContent: "center",
-        alignItems: "center",
+      onPress={() => {
+        router.push("/(notification)"); // change path to mood check-in
       }}
     >
-      <Text
-        style={{
-          textAlign: "center",
-          fontSize: 25,
-          fontFamily: "Rubik_400Regular",
-        }}
-      >
-        +
-      </Text>
-    </View>
+      <View style={[styles.container, { height, width: widht }]}>
+        <Text style={[styles.text, { lineHeight: height }]}>
+          +
+        </Text>
+      </View>
     </TouchableOpacity>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: "#DFDAEC",
+    borderRadius: 12,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  text: {
+    textAlign: "center",
+    fontSize: 30,
+    fontFamily: "Rubik_300Light",
+  },
+});
 
 export default HomePlusButton;
