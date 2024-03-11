@@ -22,33 +22,33 @@ export default function Home() {
     goals: Goal[];
   } = {
     goals: [
-      {
-        id: "1",
-        icon: "https://i.ibb.co/pKxKH9p/Cone.png",
-        title: "Digital Detox",
-        description: "This is a test goal",
-        type: "Self",
-        completed: false,
-        time: "13:00 - 18:00",
-      },
-      {
-        id: "2",
-        icon: "https://i.ibb.co/M7cs1yk/Frame-2608646.png",
-        title: "Coffee with a friend",
-        description: "This is a test goal 2",
-        type: "People",
-        completed: false,
-        time: "12:00",
-      },
-      {
-        id: "3",
-        icon: "https://i.ibb.co/GRkvtgd/Cube.png",
-        title: "Go for a walk",
-        description: "This is a test goal 2",
-        type: "Body",
-        completed: false,
-        time: "10:00",
-      },
+      // {
+      //   id: "1",
+      //   icon: "https://i.ibb.co/pKxKH9p/Cone.png",
+      //   title: "Digital Detox",
+      //   description: "This is a test goal",
+      //   type: "Self",
+      //   completed: false,
+      //   time: "13:00 - 18:00",
+      // },
+      // {
+      //   id: "2",
+      //   icon: "https://i.ibb.co/M7cs1yk/Frame-2608646.png",
+      //   title: "Coffee with a friend",
+      //   description: "This is a test goal 2",
+      //   type: "People",
+      //   completed: false,
+      //   time: "12:00",
+      // },
+      // {
+      //   id: "3",
+      //   icon: "https://i.ibb.co/GRkvtgd/Cube.png",
+      //   title: "Go for a walk",
+      //   description: "This is a test goal 2",
+      //   type: "Body",
+      //   completed: false,
+      //   time: "10:00",
+      // },
     ],
   };
 
@@ -246,7 +246,12 @@ export default function Home() {
                     }}
                   />
                 ) : (
-                  <NoGoalSet type={"Body"} />
+                  <NoGoalSet
+                    type={"Body"}
+                    iconUrl="https://i.ibb.co/GRkvtgd/Cube.png"
+                    windowHeight={windowHeight}
+                    isLast={false}
+                  />
                 )}
                 {state.selfGoal ? (
                   <GoalCard
@@ -258,7 +263,12 @@ export default function Home() {
                     }}
                   />
                 ) : (
-                  <NoGoalSet type={"Self"} />
+                  <NoGoalSet
+                    type={"Self"}
+                    iconUrl="https://i.ibb.co/pKxKH9p/Cone.png"
+                    windowHeight={windowHeight}
+                    isLast={false}
+                  />
                 )}
                 {state.peopleGoal ? (
                   <GoalCard
@@ -270,7 +280,12 @@ export default function Home() {
                     }}
                   />
                 ) : (
-                  <NoGoalSet type={"People"} />
+                  <NoGoalSet
+                    type={"People"}
+                    iconUrl="https://i.ibb.co/M7cs1yk/Frame-2608646.png"
+                    windowHeight={windowHeight}
+                    isLast={true}
+                  />
                 )}
               </>
             )}
