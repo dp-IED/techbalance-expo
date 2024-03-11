@@ -1,86 +1,59 @@
-import { View, Text, TouchableOpacity } from "react-native";
-import Svg, { Circle } from "react-native-svg";
+import { View, Text, TouchableOpacity, Image, StyleSheet } from "react-native";
 import { GoalType } from "../types/GoalType";
+import HomePlusButton from "./HomePlusButton";
 
-const NoGoalSet = (props: { type: GoalType }) => {
+const NoGoalSet = (props: {
+  type: GoalType;
+  iconUrl: string;
+  windowHeight: number;
+  isLast: boolean;
+}) => {
   return (
-    <View
-      style={{
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "space-between",
-        gap: 11,
-        width: 352,
-      }}
-    >
-      <TouchableOpacity onPress={() => {}}>
-        <Svg
-          width="34"
-          height="34"
-          viewBox="0 0 34 34"
-          fill="none"
-          id={props.type}
-        >
-          <Circle
-            cx="17"
-            cy="17"
-            r="16"
-            fill="white"
-            stroke="#A59AC8"
-            stroke-width="2"
-          />
-        </Svg>
-      </TouchableOpacity>
-      <View
-        style={{
-          padding: 5,
-          width: 320,
-          flexDirection: "row",
-          alignItems: "center",
-          borderRadius: 15,
-          gap: 3,
-          borderColor: "#E3E1EC",
-          borderWidth: 4,
-          borderStyle: "dashed",
-        }}
-      >
-        <View
-          style={{
-            display: "flex",
-            width: 50,
-            height: 74,
-            alignItems: "center",
-          }}
-        />
-        <View
-          style={{
-            flex: 1,
-            flexDirection: "column",
-            padding: 8,
-          }}
-        >
-          <Text
-            style={{
-              fontWeight: "500",
-              fontSize: 16,
-              padding: 8,
-              maxWidth: 200,
-            }}
-          >
-            Nothing to see here yet
-          </Text>
-          <Text
-            style={{
-              fontSize: 14,
-              padding: 8,
-            }}
-          >
-            {":)"}
-          </Text>
-        </View>
+    <View style={[styles.container, {height: props.windowHeight / 10, marginBottom: props.isLast ? 0 : props.windowHeight / 100}]}>
+      <Image
+        source={{ uri: props.iconUrl }}
+        style={[styles.image, styles.opacity]}
+      />
+
+      <View style={[styles.textContainer, styles.opacity]}>
+        <Text style={styles.text}>
+          {props.type}
+        </Text>
       </View>
+      <HomePlusButton widht={45} height={45} />
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    paddingRight: 12,
+    paddingLeft: 12,
+    width: "100%",
+    backgroundColor: "#F6F5FA",
+    flexDirection: "row",
+    alignItems: "center",
+    borderRadius: 12,
+  },
+  image: {
+    width: 50,
+    height: 50,
+  },
+  textContainer: {
+    flex: 1,
+    flexDirection: "column",
+    paddingLeft: 15,
+    paddingTop: 20,
+  },
+  text: {
+    fontFamily: "Rubik_400Regular",
+    color: "#4F455C",
+    fontSize: 15,
+    padding: 10,
+  },
+  opacity: {
+    opacity: 0.5,
+  },
+});
 
 export default NoGoalSet;

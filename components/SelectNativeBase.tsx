@@ -1,15 +1,15 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import RNPickerSelect from "react-native-picker-select";
-import { View, Image } from "react-native";
+import { View, Image, Platform } from "react-native";
 
 const SelectNativeBase = () => {
-  const [selected, setSelected] = React.useState("Today");
+  const [selected, setSelected] = useState("today");
   const [isOpen, setIsOpen] = useState(false);
 
   const data = [
-    { label: "Yesterday", value: "Yesterday" },
-    { label: "Today", value: "Today" },
-    { label: "Tomorrow", value: "Tomorrow" },
+    { label: "Yesterday", value: "yesterday" },
+    { label: "Today", value: "today" },
+    { label: "Tomorrow", value: "tomorrow" },
   ];
 
   const toggleOpen = () => {
@@ -43,7 +43,7 @@ const SelectNativeBase = () => {
       placeholder={{}}
       onOpen={toggleOpen}
       onClose={toggleOpen}
-      Icon={Icon}
+      Icon={Platform.OS === "ios" ? Icon : undefined}
       style={{
         inputIOS: {
           borderColor: "transparent",
@@ -54,11 +54,12 @@ const SelectNativeBase = () => {
           fontFamily: "Rubik_500Medium",
         },
         inputAndroid: {
-          borderColor: "transparent",
+          width: 155,
           flexDirection: "row",
           justifyContent: "space-between",
           alignItems: "center",
-          paddingRight: 40,
+          fontFamily: "Rubik_500Medium",
+          fontWeight: "bold",
         },
       }}
     />

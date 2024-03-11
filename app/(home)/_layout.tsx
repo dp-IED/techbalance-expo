@@ -1,23 +1,62 @@
-import { Stack, router } from "expo-router";
+import { Stack, Tabs } from "expo-router";
+import { View, Image } from "react-native";
 
 export default function Layout() {
   return (
-    <Stack>
-      <Stack.Screen
+    <Tabs>
+      <Tabs.Screen
         name="index"
         options={{
           headerShown: false,
+          tabBarShowLabel: false,
+          tabBarIcon: ({ focused }) => {
+            return (
+              <Image
+                source={require("../../assets/images/globe_nav_icon.png")}
+              />
+            );
+          },
         }}
       />
-      <Stack.Screen
-        name="modal"
+      <Tabs.Screen
+        name="second"
         options={{
-          // Set the presentation mode to modal for our modal route.
-          presentation: "modal",
           headerShown: false,
-          contentStyle: { backgroundColor: "transparent", opacity: 0.99 },
+          tabBarShowLabel: false,
+          tabBarIcon: ({ focused }) => {
+            return (
+              <Image
+                source={require("../../assets/images/statistics_nav_icon.png")}
+              />
+            );
+          },
         }}
       />
-    </Stack>
+      <Tabs.Screen
+        name="third"
+        options={{
+          headerShown: false,
+          tabBarShowLabel: false,
+          tabBarIcon: ({ focused }) => {
+            return (
+              <Image
+                source={require("../../assets/images/profile_nav_icon.png")}
+              />
+            );
+          },
+        }}
+      />
+    </Tabs>
   );
+}
+
+{
+  /* <Stack>
+  <Stack.Screen
+    name="index"
+    options={{
+      headerShown: false,
+    }}
+  />
+</Stack>; */
 }

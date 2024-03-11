@@ -7,6 +7,7 @@ const TotalGoalsRow = (props: { completion: number }) => {
       style={{
         flexDirection: "row",
         justifyContent: "space-between",
+        alignItems: "center",
         width: "100%",
       }}
     >
@@ -19,7 +20,15 @@ const TotalGoalsRow = (props: { completion: number }) => {
       >
         Today's Goals
       </Text>
-      <View
+      <SelectNativeBase />
+    </View>
+  );
+};
+
+export default TotalGoalsRow;
+
+{
+  /* <View
         style={{
           flexDirection: "row",
           justifyContent: "space-between",
@@ -33,12 +42,8 @@ const TotalGoalsRow = (props: { completion: number }) => {
             fontFamily: "Rubik_400Regular",
           }}
         >
-          {/* {`${props.completion}/3 completed`} */}
+          {`${props.completion}/3 completed`}
         </Text>
-        <SelectNativeBase />
-      </View>
-    </View>
-  );
-};
-
-export default TotalGoalsRow;
+        
+      </View> */
+}

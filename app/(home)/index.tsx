@@ -4,6 +4,7 @@ import {
   SafeAreaView,
   Dimensions,
   ActivityIndicator,
+  ScrollView,
 } from "react-native";
 import GoalCard from "@/components/GoalCard";
 import React, { useEffect, useReducer, useState } from "react";
@@ -21,33 +22,33 @@ export default function Home() {
     goals: Goal[];
   } = {
     goals: [
-      {
-        id: "1",
-        icon: "https://i.ibb.co/pKxKH9p/Cone.png",
-        title: "Digital Detox",
-        description: "This is a test goal",
-        type: "Self",
-        completed: false,
-        time: "13:00 - 18:00",
-      },
-      {
-        id: "2",
-        icon: "https://i.ibb.co/M7cs1yk/Frame-2608646.png",
-        title: "Grab a coffee",
-        description: "This is a test goal 2",
-        type: "People",
-        completed: false,
-        time: "12:00",
-      },
-      {
-        id: "3",
-        icon: "https://i.ibb.co/GRkvtgd/Cube.png",
-        title: "Go for a walk",
-        description: "This is a test goal 2",
-        type: "Body",
-        completed: false,
-        time: "10:00",
-      },
+      // {
+      //   id: "1",
+      //   icon: "https://i.ibb.co/pKxKH9p/Cone.png",
+      //   title: "Digital Detox",
+      //   description: "This is a test goal",
+      //   type: "Self",
+      //   completed: false,
+      //   time: "13:00 - 18:00",
+      // },
+      // {
+      //   id: "2",
+      //   icon: "https://i.ibb.co/M7cs1yk/Frame-2608646.png",
+      //   title: "Coffee with a friend",
+      //   description: "This is a test goal 2",
+      //   type: "People",
+      //   completed: false,
+      //   time: "12:00",
+      // },
+      // {
+      //   id: "3",
+      //   icon: "https://i.ibb.co/GRkvtgd/Cube.png",
+      //   title: "Go for a walk",
+      //   description: "This is a test goal 2",
+      //   type: "Body",
+      //   completed: false,
+      //   time: "10:00",
+      // },
     ],
   };
 
@@ -198,90 +199,109 @@ export default function Home() {
   }, [state]);
 
   return (
-    <SafeAreaView style={SafeViewAndroid.AndroidSafeArea}>
+    <View style={{ backgroundColor: "white", height: "100%" }}>
       <ShadowScreenGradient />
-      <AppBar />
-      <View
-        style={{
-          alignItems: "center",
-        }}
-      >
-        <CircularProgress
-          completion={completion}
-          windowWidth={windowWidth}
-          windowHeight={windowHeight}
-        />
-      </View>
-
-      <View
-        style={{
-          // padding only container
-          // flex: 1,
-          paddingHorizontal: 20,
-          gap: windowHeight / 56,
-          // alignItems: "center",
-        }}
-      >
-        <TotalGoalsRow completion={completion} />
+      <SafeAreaView style={SafeViewAndroid.AndroidSafeArea}>
+        {/* <ScrollView> */}
+        <AppBar />
+        <View
+          style={{
+            alignItems: "center",
+          }}
+        >
+          <CircularProgress
+            completion={completion}
+            windowWidth={windowWidth}
+            windowHeight={windowHeight}
+          />
+        </View>
 
         <View
           style={{
-            width: "100%",
+            // padding only container
+            // flex: 1,
+            paddingHorizontal: 20,
+            gap: windowHeight / 56,
+            // alignItems: "center",
           }}
         >
-          {isLoading ? (
-            <ActivityIndicator />
-          ) : (
-            <>
-              {state.bodyGoal ? (
-                <GoalCard
-                  goal={state.bodyGoal}
-                  windowHeight={windowHeight}
-                  isLast={false}
-                  onCompleted={(goal: Goal) => {
-                    dispatch({ type: "COMPLETE_GOAL", goal: goal });
-                  }}
-                />
-              ) : (
-                <NoGoalSet type={"Body"} />
-              )}
-              {state.selfGoal ? (
-                <GoalCard
-                  goal={state.selfGoal}
-                  windowHeight={windowHeight}
-                  isLast={false}
-                  onCompleted={(goal: Goal) => {
-                    dispatch({ type: "COMPLETE_GOAL", goal: goal });
-                  }}
-                />
-              ) : (
-                <NoGoalSet type={"Self"} />
-              )}
-              {state.peopleGoal ? (
-                <GoalCard
-                  goal={state.peopleGoal}
-                  windowHeight={windowHeight}
-                  isLast={true}
-                  onCompleted={(goal: Goal) => {
-                    dispatch({ type: "COMPLETE_GOAL", goal: goal });
-                  }}
-                />
-              ) : (
-                <NoGoalSet type={"People"} />
-              )}
-            </>
-          )}
+          <TotalGoalsRow completion={completion} />
+
+          <View
+            style={{
+              width: "100%",
+            }}
+          >
+            {isLoading ? (
+              <ActivityIndicator />
+            ) : (
+              <>
+                {state.bodyGoal ? (
+                  <GoalCard
+                    goal={state.bodyGoal}
+                    windowHeight={windowHeight}
+                    isLast={false}
+                    onCompleted={(goal: Goal) => {
+                      dispatch({ type: "COMPLETE_GOAL", goal: goal });
+                    }}
+                  />
+                ) : (
+                  <NoGoalSet
+                    type={"Body"}
+                    iconUrl="https://i.ibb.co/GRkvtgd/Cube.png"
+                    windowHeight={windowHeight}
+                    isLast={false}
+                  />
+                )}
+                {state.selfGoal ? (
+                  <GoalCard
+                    goal={state.selfGoal}
+                    windowHeight={windowHeight}
+                    isLast={false}
+                    onCompleted={(goal: Goal) => {
+                      dispatch({ type: "COMPLETE_GOAL", goal: goal });
+                    }}
+                  />
+                ) : (
+                  <NoGoalSet
+                    type={"Self"}
+                    iconUrl="https://i.ibb.co/pKxKH9p/Cone.png"
+                    windowHeight={windowHeight}
+                    isLast={false}
+                  />
+                )}
+                {state.peopleGoal ? (
+                  <GoalCard
+                    goal={state.peopleGoal}
+                    windowHeight={windowHeight}
+                    isLast={true}
+                    onCompleted={(goal: Goal) => {
+                      dispatch({ type: "COMPLETE_GOAL", goal: goal });
+                    }}
+                  />
+                ) : (
+                  <NoGoalSet
+                    type={"People"}
+                    iconUrl="https://i.ibb.co/M7cs1yk/Frame-2608646.png"
+                    windowHeight={windowHeight}
+                    isLast={true}
+                  />
+                )}
+              </>
+            )}
+          </View>
+          <Text
+            style={{
+              fontSize: 16,
+              fontFamily: "Rubik_500Medium",
+            }}
+          >
+            Today's Mood
+          </Text>
+          <HomeMoodBar />
         </View>
-        <Text
-          style={{
-            fontSize: 16,
-            fontFamily: "Rubik_500Medium",
-          }}
-        >
-          Today's Mood
-        </Text>
-        <HomeMoodBar />
-      </View>
-    </SafeAreaView>
+        {/* </ScrollView> */}
+      </SafeAreaView>
+    </View>
   );
 }
