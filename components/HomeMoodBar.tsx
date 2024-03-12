@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { View, Image, StyleSheet } from "react-native";
 import { Slider } from "react-native-elements";
 import HomePlusButton from "./HomePlusButton";
+import { router } from "expo-router";
 
 const HomeMoodBar = () => {
 	const [value, setValue] = useState(0);
@@ -26,7 +27,7 @@ const HomeMoodBar = () => {
 					source={require("../assets/images/home_pb_smile_icon.png")}
 					style={styles.icon}
 				/>
-				<HomePlusButton width={36} height={36} />
+				<HomePlusButton width={36} height={36} onPress={() => {router.push("/(mood)")}} />
 				<Image
 					source={require("../assets/images/home_pb_sad_icon.png")}
 					style={styles.icon}

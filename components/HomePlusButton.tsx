@@ -2,14 +2,12 @@ import { TouchableOpacity, StyleSheet } from "react-native";
 import { View, Text } from "./Themed";
 import { router } from "expo-router";
 
-const HomePlusButton = (props: { width: number; height: number }) => {
+const HomePlusButton = (props: { width: number; height: number, onPress: () => void }) => {
 	const { width: width, height } = props;
 
 	return (
 		<TouchableOpacity
-			onPress={() => {
-				router.push("/(home)/goalCtxMenu"); // change path to mood check-in
-			}}
+			onPress={props.onPress}
 		>
 			<View style={[styles.container, { height, width: width }]}>
 				<Text style={[styles.text, { lineHeight: height }]}>+</Text>

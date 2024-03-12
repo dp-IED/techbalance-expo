@@ -39,8 +39,8 @@ const IconArray: IconObject[] = [
 	},
 ];
 
-const GoalContextMenu = (props: { visible: boolean; onClose: () => void }) => (
-	<Modal visible={props.visible} animationType="slide" transparent={true}>
+const GoalContextMenu = (props: { modalVisibility: boolean; onClose: () => void }) => (
+	<Modal visible={props.modalVisibility} animationType="slide" transparent={true}>
 		<View style={styles.modalContainer}>
         <View>
           <Text>Goal Card</Text>
@@ -55,33 +55,20 @@ const GoalContextMenu = (props: { visible: boolean; onClose: () => void }) => (
         />
         <View style={styles.iconContainer}>
           {IconArray.map((icon, index) => (
-            <View key={index} style={styles.iconBlock}>
+            <TouchableOpacity key={index} style={styles.iconBlock}>
               <Image source={icon.iconPath} style={styles.icon} />
               <Text style={{ fontSize: 14, fontWeight: "600", marginVertical: 5 }}>
                 {icon.iconTitle}
               </Text>
-            </View>
+            </TouchableOpacity>
           ))}
         </View>
+        <TouchableOpacity style={styles.closeBtnContainer} onPress={props.onClose}>
+          <Text style={styles.closeBtn}>X</Text>
+        </TouchableOpacity>
       </View>
 	</Modal>
 );
-
-const Second = (props: { visibility: boolean }) => {
-	const [modalVisibility, setModalVisibility] = useState(false);
-	return (
-		<View>
-			<Text>Hello</Text>
-			<TouchableOpacity onPress={() => setModalVisibility(true)}>
-				<Text>Press to open modal</Text>
-			</TouchableOpacity>
-			<GoalContextMenu
-				visible={modalVisibility}
-				onClose={() => setModalVisibility(false)}
-			/>
-		</View>
-	);
-};
 
 const styles = StyleSheet.create({
 	modalContainer: {
@@ -107,6 +94,19 @@ const styles = StyleSheet.create({
 		width: 24,
 		height: 24,
 	},
+  closeBtnContainer: {
+    backgroundColor: "#C9E3D6",
+    width: 40,
+    height: 40,
+    borderRadius: 16,
+    paddingHorizontal: 13,
+    paddingVertical: 6
+  },
+  closeBtn: {
+    color: "#4F455C",
+    fontSize: 20,
+    fontWeight: "600"
+  }
 });
 
-export default Second;
+export default GoalContextMenu;
