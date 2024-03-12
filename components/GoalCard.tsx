@@ -1,6 +1,7 @@
 import { View, Text, TouchableOpacity, Image } from "react-native";
 import Svg, { Circle, Path } from "react-native-svg";
 import { Goal } from "../types/Goal";
+import { router } from "expo-router";
 
 const GoalCard = (props: {
   goal: Goal;
