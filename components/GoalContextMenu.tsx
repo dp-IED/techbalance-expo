@@ -13,10 +13,10 @@ interface IconObject {
 	iconTitle: string;
 }
 
-const EditIcon = require("../../assets/images/EditIcon.png");
-const SnoozeIcon = require("../../assets/images/SnoozeIcon.png");
-const SkipIcon = require("../../assets/images/SkipIcon.png");
-const BinIcon = require("../../assets/images/BinIcon.png");
+const EditIcon = require("../assets/images/EditIcon.png");
+const SnoozeIcon = require("../assets/images/SnoozeIcon.png");
+const SkipIcon = require("../assets/images/SkipIcon.png");
+const BinIcon = require("../assets/images/BinIcon.png");
 
 const IconArray: IconObject[] = [
 	{
@@ -37,18 +37,27 @@ const IconArray: IconObject[] = [
 	},
 ];
 
-const GoalContextMenu = (props: { modalVisibility: boolean; onClose: () => void }) => (
+const GoalContextMenu = (
+  props: { 
+    modalVisibility: boolean; 
+    onClose: () => void;
+    title: string;
+    icon: string;
+    type: string; 
+  }) => (
 	<Modal visible={props.modalVisibility} animationType="slide" transparent={true}>
 		<View style={styles.modalContainer}>
-        <View>
-          <Text>Goal Card</Text>
+        <View style={styles.goalCard}>
+          <Image source={{uri: props.icon}} width={60} height={60}></Image>
+          <Text style={{ fontSize: 18, fontWeight: "600", marginVertical: 5 }}>{props.title}</Text>
+          <Text>{props.type}</Text>
         </View>
         <ButtonWithIcon
           title="Complete"
           onPress={() => {}}
           active={true}
           color="#8DD5B3"
-          icon={require("../../assets/images/tick.png")}
+          icon={require("../assets/images/tick.png")}
         />
         <View style={styles.iconContainer}>
           {IconArray.map((icon, index) => (
@@ -73,8 +82,16 @@ const styles = StyleSheet.create({
 		justifyContent: "space-between",
 		alignItems: "center",
 		marginHorizontal: "5%",
-    marginTop: "100%",
+    marginTop: "75%",
 	},
+  goalCard: {
+    backgroundColor: "white",
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+    paddingTop: 20,
+    paddingBottom: 20,
+  },
 	iconContainer: {
 		flexDirection: "row",
 		justifyContent: "space-around",

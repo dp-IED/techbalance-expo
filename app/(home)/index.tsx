@@ -16,7 +16,7 @@ import TotalGoalsRow from "@/components/TotalGoalsRow";
 import SafeViewAndroid from "@/components/SafeViewAndroid";
 import ShadowScreenGradient from "@/components/ShadowScreenGradient";
 import HomeMoodBar from "@/components/HomeMoodBar";
-
+import GoalContextMenu from "@/components/GoalContextMenu";
 
 export default function Home() {
 	const props: {
@@ -58,7 +58,9 @@ export default function Home() {
 	const windowWidth = Dimensions.get("window").width;
 	const windowHeight = Dimensions.get("window").height;
 	const [isLoading, setLoading] = useState(true);
-	const [modalVisibility, setModalVisibility] = useState(false);
+	const [bodyModalVisibility, setBodyModalVisibility] = useState(false);
+	const [selfModalVisibility, setSelfModalVisibility] = useState(false);
+	const [peopleModalVisibility, setPeopleModalVisibility] = useState(false);
 
 	type State = {
 		selfGoal: Goal | undefined;
@@ -202,7 +204,17 @@ export default function Home() {
 
 	return (
 		<View style={{ backgroundColor: "white", height: "100%" }}>
-			{modalVisibility && <View style={{...StyleSheet.absoluteFillObject, backgroundColor: 'rgba(0, 0, 0, 0.5)', zIndex: 10}} />}
+			{(bodyModalVisibility ||
+				selfModalVisibility ||
+				peopleModalVisibility) && (
+				<View
+					style={{
+						...StyleSheet.absoluteFillObject,
+						backgroundColor: "rgba(0, 0, 0, 0.5)",
+						zIndex: 10,
+					}}
+				/>
+			)}
 			<ShadowScreenGradient />
 			<SafeAreaView style={SafeViewAndroid.AndroidSafeArea}>
 				{/* <ScrollView> */}
@@ -250,8 +262,10 @@ export default function Home() {
 												goal: goal,
 											});
 										}}
-										modalVisibility={modalVisibility}
-										setModalVisibility={setModalVisibility}
+										modalVisibility={bodyModalVisibility}
+										setModalVisibility={
+											setBodyModalVisibility
+										}
 									/>
 								) : (
 									<NoGoalSet
@@ -272,8 +286,10 @@ export default function Home() {
 												goal: goal,
 											});
 										}}
-										modalVisibility={modalVisibility}
-										setModalVisibility={setModalVisibility}
+										modalVisibility={selfModalVisibility}
+										setModalVisibility={
+											setSelfModalVisibility
+										}
 									/>
 								) : (
 									<NoGoalSet
@@ -294,8 +310,10 @@ export default function Home() {
 												goal: goal,
 											});
 										}}
-										modalVisibility={modalVisibility}
-										setModalVisibility={setModalVisibility}
+										modalVisibility={peopleModalVisibility}
+										setModalVisibility={
+											setPeopleModalVisibility
+										}
 									/>
 								) : (
 									<NoGoalSet
