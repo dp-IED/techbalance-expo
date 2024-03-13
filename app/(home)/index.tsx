@@ -4,7 +4,7 @@ import {
 	SafeAreaView,
 	Dimensions,
 	ActivityIndicator,
-	ScrollView,
+	StyleSheet,
 } from "react-native";
 import GoalCard from "@/components/GoalCard";
 import React, { useEffect, useReducer, useState } from "react";
@@ -16,40 +16,40 @@ import TotalGoalsRow from "@/components/TotalGoalsRow";
 import SafeViewAndroid from "@/components/SafeViewAndroid";
 import ShadowScreenGradient from "@/components/ShadowScreenGradient";
 import HomeMoodBar from "@/components/HomeMoodBar";
-import GoalContextMenu from "./goalCtxMenu";
+
 
 export default function Home() {
 	const props: {
 		goals: Goal[];
 	} = {
 		goals: [
-			// {
-			//   id: "1",
-			//   icon: "https://i.ibb.co/pKxKH9p/Cone.png",
-			//   title: "Digital Detox",
-			//   description: "This is a test goal",
-			//   type: "Self",
-			//   completed: false,
-			//   time: "13:00 - 18:00",
-			// },
-			// {
-			//   id: "2",
-			//   icon: "https://i.ibb.co/M7cs1yk/Frame-2608646.png",
-			//   title: "Coffee with a friend",
-			//   description: "This is a test goal 2",
-			//   type: "People",
-			//   completed: false,
-			//   time: "12:00",
-			// },
-			// {
-			//   id: "3",
-			//   icon: "https://i.ibb.co/GRkvtgd/Cube.png",
-			//   title: "Go for a walk",
-			//   description: "This is a test goal 2",
-			//   type: "Body",
-			//   completed: false,
-			//   time: "10:00",
-			// },
+			{
+				id: "1",
+				icon: "https://i.ibb.co/pKxKH9p/Cone.png",
+				title: "Digital Detox",
+				description: "This is a test goal",
+				type: "Self",
+				completed: false,
+				time: "13:00 - 18:00",
+			},
+			{
+				id: "2",
+				icon: "https://i.ibb.co/M7cs1yk/Frame-2608646.png",
+				title: "Coffee with a friend",
+				description: "This is a test goal 2",
+				type: "People",
+				completed: false,
+				time: "12:00",
+			},
+			{
+				id: "3",
+				icon: "https://i.ibb.co/GRkvtgd/Cube.png",
+				title: "Go for a walk",
+				description: "This is a test goal 2",
+				type: "Body",
+				completed: false,
+				time: "10:00",
+			},
 		],
 	};
 
@@ -202,6 +202,7 @@ export default function Home() {
 
 	return (
 		<View style={{ backgroundColor: "white", height: "100%" }}>
+			{modalVisibility && <View style={{...StyleSheet.absoluteFillObject, backgroundColor: 'rgba(0, 0, 0, 0.5)', zIndex: 10}} />}
 			<ShadowScreenGradient />
 			<SafeAreaView style={SafeViewAndroid.AndroidSafeArea}>
 				{/* <ScrollView> */}
@@ -249,6 +250,8 @@ export default function Home() {
 												goal: goal,
 											});
 										}}
+										modalVisibility={modalVisibility}
+										setModalVisibility={setModalVisibility}
 									/>
 								) : (
 									<NoGoalSet
@@ -256,8 +259,6 @@ export default function Home() {
 										iconUrl="https://i.ibb.co/GRkvtgd/Cube.png"
 										windowHeight={windowHeight}
 										isLast={false}
-										modalVisibility={modalVisibility}
-										setModalVisibility={setModalVisibility}
 									/>
 								)}
 								{state.selfGoal ? (
@@ -271,6 +272,8 @@ export default function Home() {
 												goal: goal,
 											});
 										}}
+										modalVisibility={modalVisibility}
+										setModalVisibility={setModalVisibility}
 									/>
 								) : (
 									<NoGoalSet
@@ -278,8 +281,6 @@ export default function Home() {
 										iconUrl="https://i.ibb.co/pKxKH9p/Cone.png"
 										windowHeight={windowHeight}
 										isLast={false}
-										modalVisibility={modalVisibility}
-										setModalVisibility={setModalVisibility}
 									/>
 								)}
 								{state.peopleGoal ? (
@@ -293,26 +294,16 @@ export default function Home() {
 												goal: goal,
 											});
 										}}
+										modalVisibility={modalVisibility}
+										setModalVisibility={setModalVisibility}
 									/>
 								) : (
-									<>
-										<NoGoalSet
-											type={"People"}
-											iconUrl="https://i.ibb.co/M7cs1yk/Frame-2608646.png"
-											windowHeight={windowHeight}
-											isLast={true}
-											modalVisibility={modalVisibility}
-											setModalVisibility={
-												setModalVisibility
-											}
-										/>
-										<GoalContextMenu
-											modalVisibility={modalVisibility}
-											onClose={() =>
-												setModalVisibility(false)
-											}
-										/>
-									</>
+									<NoGoalSet
+										type={"People"}
+										iconUrl="https://i.ibb.co/M7cs1yk/Frame-2608646.png"
+										windowHeight={windowHeight}
+										isLast={true}
+									/>
 								)}
 							</>
 						)}

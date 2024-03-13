@@ -7,8 +7,6 @@ const NoGoalSet = (props: {
 	iconUrl: string;
 	windowHeight: number;
 	isLast: boolean;
-	modalVisibility: boolean;
-  setModalVisibility: (visible: boolean) => void;
 }) => {
 	return (
 		<View
@@ -28,7 +26,7 @@ const NoGoalSet = (props: {
 			<View style={[styles.textContainer, styles.opacity]}>
 				<Text style={styles.text}>{props.type}</Text>
 			</View>
-			<HomePlusButton width={45} height={45} onPress={() => props.setModalVisibility(true)}/>
+			<HomePlusButton width={45} height={45} onPress={() => {}}/>
 		</View>
 	);
 };

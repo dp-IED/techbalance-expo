@@ -1,6 +1,4 @@
 import ButtonWithIcon from "@/components/ButtonWithIcon";
-import HomeFireButton from "@/components/HomeFireButton";
-import { useState } from "react";
 import {
 	View,
 	Text,
@@ -44,7 +42,6 @@ const GoalContextMenu = (props: { modalVisibility: boolean; onClose: () => void 
 		<View style={styles.modalContainer}>
         <View>
           <Text>Goal Card</Text>
-          <HomeFireButton/>
         </View>
         <ButtonWithIcon
           title="Complete"
