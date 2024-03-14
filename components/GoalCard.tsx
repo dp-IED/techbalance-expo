@@ -114,9 +114,13 @@ const GoalCard = (props: {
 				<GoalContextMenu
 					modalVisibility={props.modalVisibility}
 					onClose={() => props.setModalVisibility(false)}
-          title={props.goal.title}
-          icon={props.goal.icon}
-          type={props.goal.type}
+          title={title}
+          icon={icon}
+          type={type}
+					onComplete={() => {
+						props.onCompleted(props.goal);
+						props.setModalVisibility(false);
+					}}
 				/>
 			)}
 		</>
