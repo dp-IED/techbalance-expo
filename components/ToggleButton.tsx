@@ -7,7 +7,7 @@ interface ToggleButtonProps {
     emoji: string;
   };
   paddingVertical: number;
-  paddingHorizontal: number;
+  paddingHorizontal?: number;
   borderRadius: number;
   height: number;
   notPressedBackgroundColor: string;
@@ -16,12 +16,13 @@ interface ToggleButtonProps {
   fontFamily: string;
   notPressedTextColor: string;
   pressedTextColor: string;
+  width?: number;
 }
 
 const ToggleButton = ({
   title,
   paddingVertical,
-  paddingHorizontal,
+  paddingHorizontal = 0,
   borderRadius,
   height,
   notPressedBackgroundColor,
@@ -30,6 +31,7 @@ const ToggleButton = ({
   fontFamily,
   notPressedTextColor,
   pressedTextColor,
+  width,
 }: ToggleButtonProps) => {
   const [isPressed, setIsPressed] = useState(false);
 
@@ -50,6 +52,7 @@ const ToggleButton = ({
           backgroundColor: isPressed
             ? pressedBackgroundColor
             : notPressedBackgroundColor,
+            width,
         },
       ]}
     >

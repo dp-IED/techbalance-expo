@@ -73,17 +73,18 @@ export default function EventsPicker() {
             numRows={4}
             buttonProps={{
               paddingVertical: 12,
-              paddingHorizontal: 32,
+              width: 100,
               borderRadius: 16,
-              height: 80,
+              height: 90,
               notPressedBackgroundColor: "white",
               pressedBackgroundColor: "#9D95BC",
-              fontSize: 18,
+              fontSize: 14,
               fontFamily: "Rubik_500Medium",
               notPressedTextColor: "black",
               pressedTextColor: "white",
             }}
             data={feelingEmojiData}
+            style={{}}
           />
           <View style={styles.navButtonsContainer}>
             <TouchableOpacity onPress={() => router.back()}>
@@ -91,7 +92,7 @@ export default function EventsPicker() {
             </TouchableOpacity>
 
             <ButtonNormal
-              title="Complete"
+              title="Complete 🎉"
               onPress={() => {}}
               active={true}
               color={"#9F92C7"}
@@ -115,7 +116,7 @@ const styles = StyleSheet.create({
   },
   container: {
     paddingHorizontal: 15,
-    gap: 60,
+    gap: 40,
   },
   pressable: {},
   centeredView: {

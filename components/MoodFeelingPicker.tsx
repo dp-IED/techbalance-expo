@@ -8,9 +8,10 @@ interface DataItem {
 }
 interface ToggleButtonProps {
   paddingVertical: number;
-  paddingHorizontal: number;
+  paddingHorizontal?: number;
   borderRadius: number;
   height: number;
+  width?: number;
   notPressedBackgroundColor: string;
   pressedBackgroundColor: string;
   fontSize: number;
