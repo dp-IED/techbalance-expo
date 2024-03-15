@@ -9,6 +9,18 @@ export default function Layout() {
           headerShown: false,
         }}
       />
+      <Stack.Screen
+        name="feeling_picker"
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="uplift_events_picker"
+        options={{
+          headerShown: false,
+        }}
+      />
     </Stack>
   );
 }
