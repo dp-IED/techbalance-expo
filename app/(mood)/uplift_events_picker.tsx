@@ -16,29 +16,30 @@ import ButtonNormal from "@/components/ButtonNormal";
 
 export default function EventsPicker() {
   const feelingEmojiData = [
-    { id: 1, text: "Brave" },
-    { id: 2, text: "Confident" },
-    { id: 3, text: "Creative" },
-    { id: 4, text: "Excited" },
-    { id: 5, text: "Free" },
-    { id: 6, text: "Happy" },
-    { id: 7, text: "Loved" },
-    { id: 8, text: "Proud" },
-    { id: 9, text: "Respected" },
-    // { id: 10, text: "+ Other" },
-    // { id: 11, text: "Strong" },
-    // { id: 12, text: "Thankful" },
-    // { id: 13, text: "Valued" },
-    // { id: 14, text: "Worthy" },
-    // { id: 15, text: "Adventurous" },
-    // { id: 16, text: "Amazed" },
-    // { id: 17, text: "Eager" },
-    // { id: 18, text: "Energetic" },
-    // { id: 19, text: "Joyful" },
-    // { id: 20, text: "Lively" },
-    // { id: 21, text: "Optimistic" },
-    // { id: 22, text: "Playful" },
-    // { id: 23, text: "Relaxed" },
+    { id: 1, text: "Study", emoji: "📚" },
+    { id: 2, text: "Family", emoji: "🏠" },
+    { id: 3, text: "TV", emoji: "📺" },
+    { id: 4, text: "Shopping", emoji: "🛍" },
+    { id: 5, text: "Sleep", emoji: "💤" },
+    { id: 6, text: "Friends", emoji: "💙" },
+    { id: 7, text: "Money", emoji: "💷" },
+    { id: 8, text: "Gaming", emoji: "🎮" },
+    { id: 9, text: "Exercise", emoji: "🏃" },
+    { id: 10, text: "Partner", emoji: "💓" },
+    { id: 11, text: "Weather", emoji: "☔️" },
+    { id: 12, text: "Future plans", emoji: "🎯" },
+    { id: 13, text: "Nutrition", emoji: "🍔" },
+    { id: 14, text: "Life events", emoji: "😰" },
+    { id: 15, text: "Work", emoji: "💼" },
+    { id: 16, text: "Reading", emoji: "📖" },
+    { id: 17, text: "Mental health", emoji: "🧠" },
+    { id: 18, text: "Chores", emoji: "🧽" },
+    { id: 19, text: "Relax", emoji: "🕯" },
+    { id: 20, text: "Unsure", emoji: "🤔" },
+    { id: 21, text: "Social media", emoji: "📱" },
+    { id: 22, text: "Hobby", emoji: "🎲" },
+    { id: 23, text: "Nightlife", emoji: "💃" },
+    { id: 24, text: "Edit/New", emoji: "+" },
   ];
   const router = useRouter();
   const windowWidth = Dimensions.get("window").width;
@@ -69,12 +70,12 @@ export default function EventsPicker() {
           </View>
 
           <MoodFeelingPicker
-            numRows={5}
+            numRows={4}
             buttonProps={{
               paddingVertical: 12,
               paddingHorizontal: 32,
               borderRadius: 16,
-              height: 50,
+              height: 80,
               notPressedBackgroundColor: "white",
               pressedBackgroundColor: "#9D95BC",
               fontSize: 18,

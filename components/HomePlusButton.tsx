@@ -8,7 +8,7 @@ const HomePlusButton = (props: { widht: number; height: number }) => {
   return (
     <TouchableOpacity
       onPress={() => {
-        router.push("/(mood)/feeling_picker"); // change path to mood check-in
+        router.push("/(mood)/uplift_events_picker"); // change path to mood check-in
       }}
     >
       <View style={[styles.container, { height, width: widht }]}>

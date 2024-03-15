@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import { TouchableOpacity, Text, StyleSheet } from "react-native";
 
-interface MoodToggleButtonProps {
-  title: string;
+interface ToggleButtonProps {
+  title: {
+    text: string;
+    emoji: string;
+  };
   paddingVertical: number;
   paddingHorizontal: number;
   borderRadius: number;
@@ -27,7 +30,7 @@ const ToggleButton = ({
   fontFamily,
   notPressedTextColor,
   pressedTextColor,
-}: MoodToggleButtonProps) => {
+}: ToggleButtonProps) => {
   const [isPressed, setIsPressed] = useState(false);
 
   const handlePress = () => {
@@ -60,7 +63,8 @@ const ToggleButton = ({
           },
         ]}
       >
-        {title}
+        {title.emoji && `${title.emoji}\n`}
+        {title.text}
       </Text>
     </TouchableOpacity>
   );

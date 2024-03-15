@@ -4,8 +4,9 @@ import ToggleButton from "./ToggleButton";
 interface DataItem {
   id: number;
   text: string;
+  emoji?: string;
 }
-interface MoodToggleButtonProps {
+interface ToggleButtonProps {
   paddingVertical: number;
   paddingHorizontal: number;
   borderRadius: number;
@@ -21,7 +22,7 @@ interface MoodToggleButtonProps {
 interface MoodFeelingPickerProps {
   style?: object;
   numRows: number;
-  buttonProps: MoodToggleButtonProps;
+  buttonProps: ToggleButtonProps;
   data: DataItem[];
 }
 
@@ -40,7 +41,7 @@ const MoodFeelingPicker = ({
               .filter((item) => item.id % numRows === remainder)
               .map((item) => (
                 <View style={styles.buttonContainer} key={item.id}>
-                  <ToggleButton title={item.text} {...buttonProps} />
+                  <ToggleButton title={{text: item.text, emoji: item.emoji || ''}} {...buttonProps} />
                 </View>
               ))}
           </View>
