@@ -30,7 +30,7 @@ const ButtonNormal = ({
       shadowRadius: 1,
       elevation: 1,
 
-      // paddingHorizontal: 80,
+      paddingHorizontal: 80,
       paddingVertical: 10,
       borderRadius: 30,
 

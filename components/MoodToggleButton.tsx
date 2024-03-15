@@ -1,7 +1,33 @@
 import React, { useState } from "react";
 import { TouchableOpacity, Text, StyleSheet } from "react-native";
 
-const MoodToggleButton = ({ title }: { title: string }) => {
+interface MoodToggleButtonProps {
+  title: string;
+  paddingVertical: number;
+  paddingHorizontal: number;
+  borderRadius: number;
+  height: number;
+  notPressedBackgroundColor: string;
+  pressedBackgroundColor: string;
+  fontSize: number;
+  fontFamily: string;
+  notPressedTextColor: string;
+  pressedTextColor: string;
+}
+
+const MoodToggleButton = ({
+  title,
+  paddingVertical,
+  paddingHorizontal,
+  borderRadius,
+  height,
+  notPressedBackgroundColor,
+  pressedBackgroundColor,
+  fontSize,
+  fontFamily,
+  notPressedTextColor,
+  pressedTextColor,
+}: MoodToggleButtonProps) => {
   const [isPressed, setIsPressed] = useState(false);
 
   const handlePress = () => {
@@ -11,12 +37,25 @@ const MoodToggleButton = ({ title }: { title: string }) => {
   return (
     <TouchableOpacity
       onPress={handlePress}
-      style={[styles.button, isPressed ? styles.pressed : styles.notPressed]}
+      style={[
+        styles.button,
+        {
+          paddingVertical,
+          paddingHorizontal,
+          borderRadius,
+          height,
+          backgroundColor: isPressed ? pressedBackgroundColor : notPressedBackgroundColor,
+        },
+      ]}
     >
       <Text
         style={[
           styles.text,
-          isPressed ? styles.pressedText : styles.notPressedText,
+          {
+            fontSize,
+            fontFamily,
+            color: isPressed ? pressedTextColor : notPressedTextColor,
+          },
         ]}
       >
         {title}
@@ -29,26 +68,9 @@ const styles = StyleSheet.create({
   button: {
     justifyContent: "center",
     alignItems: "center",
-    paddingVertical: 12,
-    paddingHorizontal: 32,
-    borderRadius: 30,
-    height: 50,
-  },
-  notPressed: {
-    backgroundColor: "white",
-  },
-  pressed: {
-    backgroundColor: "#9D95BC",
   },
   text: {
-    fontSize: 18,
-    fontFamily: "Rubik_500Medium",
-  },
-  notPressedText: {
-    color: "black",
-  },
-  pressedText: {
-    color: "white",
+    textAlign: "center",
   },
 });
 

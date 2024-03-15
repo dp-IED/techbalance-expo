@@ -1,7 +1,26 @@
-import { View, StyleSheet, ScrollView, Text } from "react-native";
+import { View, StyleSheet, ScrollView } from "react-native";
 import MoodToggleButton from "./MoodToggleButton";
 
-const MoodFeelingPicker = (props: {}) => {
+interface MoodToggleButtonProps {
+  paddingVertical: number;
+  paddingHorizontal: number;
+  borderRadius: number;
+  height: number;
+  notPressedBackgroundColor: string;
+  pressedBackgroundColor: string;
+  fontSize: number;
+  fontFamily: string;
+  notPressedTextColor: string;
+  pressedTextColor: string;
+}
+
+interface MoodFeelingPickerProps {
+  style?: object;
+  numRows: number;
+  buttonProps: MoodToggleButtonProps;
+}
+
+const MoodFeelingPicker = ({ style, numRows, buttonProps }: MoodFeelingPickerProps) => {
   const data = [
     { id: 1, text: "Brave" },
     { id: 2, text: "Confident" },
@@ -29,15 +48,18 @@ const MoodFeelingPicker = (props: {}) => {
   ];
 
   return (
-    <ScrollView horizontal={true}>
+    <ScrollView horizontal={true} style={style}>
       <View style={{ flexDirection: "column" }}>
-        {[0, 1, 2, 3, 4].map((remainder) => (
+        {Array.from({ length: numRows }, (_, i) => i).map((remainder) => (
           <View style={{ flexDirection: "row" }} key={remainder}>
             {data
-              .filter((item) => item.id % 5 === remainder)
+              .filter((item) => item.id % numRows === remainder)
               .map((item) => (
                 <View style={styles.buttonContainer} key={item.id}>
-                  <MoodToggleButton title={item.text} />
+                  <MoodToggleButton
+                    title={item.text}
+                    {...buttonProps}
+                  />
                 </View>
               ))}
           </View>
@@ -50,7 +72,7 @@ const MoodFeelingPicker = (props: {}) => {
 const styles = StyleSheet.create({
   buttonContainer: {
     paddingHorizontal: 10,
-    paddingBottom: 10,
+    paddingBottom: 15,
   },
 });
 

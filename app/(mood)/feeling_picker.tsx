@@ -46,7 +46,21 @@ export default function FeelingPicker() {
             </Text>
           </View>
 
-          <MoodFeelingPicker />
+          <MoodFeelingPicker
+            numRows={4}
+            buttonProps={{
+              paddingVertical: 12,
+              paddingHorizontal: 32,
+              borderRadius: 30,
+              height: 50,
+              notPressedBackgroundColor: "white",
+              pressedBackgroundColor: "#9D95BC",
+              fontSize: 18,
+              fontFamily: "Rubik_500Medium",
+              notPressedTextColor: "black",
+              pressedTextColor: "white",
+            }}
+          />
           <View style={styles.navButtonsContainer}>
             <TouchableOpacity onPress={() => router.back()}>
               <Text style={styles.backTextStyle}>Back</Text>
@@ -58,7 +72,7 @@ export default function FeelingPicker() {
               active={true}
               color={"#9F92C7"}
               height={50}
-              width={300}
+              width={310}
             />
           </View>
         </View>
@@ -77,13 +91,12 @@ const styles = StyleSheet.create({
   },
   container: {
     paddingHorizontal: 15,
-    gap: 40,
+    gap: 60,
   },
   pressable: {},
   centeredView: {
     justifyContent: "center",
     alignItems: "flex-start",
-    paddingRight: 60,
   },
   headerTextStyle: {
     fontSize: 28,
@@ -92,23 +105,20 @@ const styles = StyleSheet.create({
   },
   closeContainer: {
     paddingVertical: 10,
-    // marginBottom: 40,
   },
+
   backTextStyle: {
     fontSize: 16,
-    paddingRight: 15,
   },
   navButtonsContainer: {
     flexDirection: "row",
     alignItems: "center",
-    // backgroundColor: "green",
     justifyContent: "space-between",
   },
   continueTextStyle: {},
   transitionButtonsContainer: {
     flexDirection: "row",
     alignItems: "center",
-    paddingRight: 40,
     height: 50,
   },
 });
