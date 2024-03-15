@@ -200,7 +200,7 @@ export default function Home() {
 
   return (
     <View style={{ backgroundColor: "white", height: "100%" }}>
-      <ShadowScreenGradient />
+      <ShadowScreenGradient color={"#B3ADCD"} size={windowWidth + 90} opacity={0.7} left={ -windowWidth / 2.2} top={-20} />
       <SafeAreaView style={SafeViewAndroid.AndroidSafeArea}>
         {/* <ScrollView> */}
         <AppBar />
@@ -220,7 +220,7 @@ export default function Home() {
           style={{
             // padding only container
             // flex: 1,
-            paddingHorizontal: 20,
+            paddingHorizontal: 30,
             gap: windowHeight / 56,
             // alignItems: "center",
           }}

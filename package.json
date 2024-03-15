@@ -21,6 +21,7 @@
     "@react-native-async-storage/async-storage": "^1.22.0",
     "@react-native-community/netinfo": "^11.3.0",
     "@react-native-community/slider": "^4.5.0",
+    "@react-native-seoul/masonry-list": "^1.4.2",
     "@react-navigation/drawer": "^6.6.6",
     "@react-navigation/native": "^6.1.9",
     "@react-navigation/native-stack": "^6.9.17",
