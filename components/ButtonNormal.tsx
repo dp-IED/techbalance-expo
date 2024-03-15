@@ -5,13 +5,17 @@ const ButtonNormal = ({
   onPress,
   style,
   active,
-  color
+  color,
+  width,
+  height,
 }: {
   title: string;
   onPress: () => void;
   style?: object;
   active: boolean;
-  color: string
+  color: string;
+  width?: number | string;
+  height: number;
 }) => {
   const buttonStyle = StyleSheet.create({
     button: {
@@ -26,7 +30,7 @@ const ButtonNormal = ({
       shadowRadius: 1,
       elevation: 1,
 
-      paddingHorizontal: 80,
+      // paddingHorizontal: 80,
       paddingVertical: 10,
       borderRadius: 30,
 
@@ -34,7 +38,8 @@ const ButtonNormal = ({
       borderWidth: active ? 0 : 1,
 
       display: "flex",
-      height: 40,
+      height: height,
+      width: width as any,
       justifyContent: "center",
       alignItems: "center",
     },

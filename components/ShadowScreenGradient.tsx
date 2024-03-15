@@ -1,17 +1,16 @@
 import React from "react";
 import { Dimensions, StatusBar, StyleSheet, View } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
 import Svg, { Defs, RadialGradient, Stop, Circle } from "react-native-svg";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
-const ShadowScreenGradient = (props: any) => {
+const ShadowScreenGradient = (props: {color: string, size: number, opacity: number, left: number, top: number}) => {
   return (
-    <View style={{ position: "absolute", left: -windowWidth / 2.2, top: -20 }}>
+    <View style={{ position: "absolute", left: props.left, top: props.top }}>
       <Svg
-        height={windowWidth + 90}
-        width={windowWidth + 90}
+        height={props.size}
+        width={props.size}
         viewBox="0 0 240 240"
         style={{ position: "absolute" }}
       >
@@ -26,7 +25,7 @@ const ShadowScreenGradient = (props: any) => {
             fy="50%"
             gradientUnits="userSpaceOnUse"
           >
-            <Stop offset="0%" stopColor="#B3ADCD" stopOpacity="0.7" />
+            <Stop offset="0%" stopColor={props.color} stopOpacity={props.opacity} />
             <Stop offset="100%" stopColor="#ffffff" stopOpacity="1" />
           </RadialGradient>
         </Defs>

@@ -12,9 +12,7 @@ const HomePlusButton = (props: { widht: number; height: number }) => {
       }}
     >
       <View style={[styles.container, { height, width: widht }]}>
-        <Text style={[styles.text, { lineHeight: height }]}>
-          +
-        </Text>
+        <Text style={[styles.text, { lineHeight: height }]}>+</Text>
       </View>
     </TouchableOpacity>
   );
