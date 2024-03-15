@@ -17,6 +17,7 @@ interface ToggleButtonProps {
   notPressedTextColor: string;
   pressedTextColor: string;
   width?: number;
+  toggleFunction: () => void;
 }
 
 const ToggleButton = ({
@@ -32,11 +33,16 @@ const ToggleButton = ({
   notPressedTextColor,
   pressedTextColor,
   width,
+  toggleFunction,
 }: ToggleButtonProps) => {
   const [isPressed, setIsPressed] = useState(false);
 
   const handlePress = () => {
-    setIsPressed(!isPressed);
+    if (title.text === "+ Other" || title.text === "Edit/New") {
+      toggleFunction();
+    } else {
+      setIsPressed(!isPressed);
+    }
   };
 
   return (
@@ -52,7 +58,7 @@ const ToggleButton = ({
           backgroundColor: isPressed
             ? pressedBackgroundColor
             : notPressedBackgroundColor,
-            width,
+          width,
         },
       ]}
     >

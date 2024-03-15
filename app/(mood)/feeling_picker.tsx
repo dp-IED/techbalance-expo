@@ -12,40 +12,36 @@ import { AntDesign } from "@expo/vector-icons";
 import ShadowScreenGradient from "@/components/ShadowScreenGradient";
 import ButtonNormal from "@/components/ButtonNormal";
 import MoodFeelingPicker from "@/components/MoodFeelingPicker";
+import ModalTester from "@/components/BottomModalText";
+import { useEffect, useState } from "react";
 
 export default function FeelingPicker() {
-  const feelingTextData = [
-    { id: 1, text: "Brave" },
-    { id: 2, text: "Confident" },
-    { id: 3, text: "Creative" },
-    { id: 4, text: "Excited" },
-    { id: 5, text: "Free" },
-    { id: 6, text: "Happy" },
-    { id: 7, text: "Loved" },
-    { id: 8, text: "Proud" },
-    { id: 9, text: "Respected" },
-    // { id: 10, text: "+ Other" },
-    // { id: 11, text: "Strong" },
-    // { id: 12, text: "Thankful" },
-    // { id: 13, text: "Valued" },
-    // { id: 14, text: "Worthy" },
-    // { id: 15, text: "Adventurous" },
-    // { id: 16, text: "Amazed" },
-    // { id: 17, text: "Eager" },
-    // { id: 18, text: "Energetic" },
-    // { id: 19, text: "Joyful" },
-    // { id: 20, text: "Lively" },
-    // { id: 21, text: "Optimistic" },
-    // { id: 22, text: "Playful" },
-    // { id: 23, text: "Relaxed" },
-  ];
+  const [feelingTextData, changeData] = useState<
+    { id: number; text: string }[]
+  >([]);
+
+  useEffect(() => {
+    changeData([
+      { id: 1, text: "Brave" },
+      { id: 2, text: "Confident" },
+      { id: 3, text: "Creative" },
+      { id: 4, text: "Excited" },
+      { id: 5, text: "Free" },
+      { id: 6, text: "Happy" },
+      { id: 7, text: "Loved" },
+      { id: 8, text: "Proud" },
+      { id: 9, text: "Respected" },
+      { id: 10, text: "+ Other" },
+    ]);
+  }, []);
+
+  const [isModalVisible, setModalVisible] = useState(false);
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  };
 
   const router = useRouter();
   const windowWidth = Dimensions.get("window").width;
-
-  // useEffect(() => {
-  //   console.log({ windowWidth });
-  // }, []);
 
   return (
     <View style={styles.viewContainer}>
@@ -85,6 +81,7 @@ export default function FeelingPicker() {
               fontFamily: "Rubik_500Medium",
               notPressedTextColor: "black",
               pressedTextColor: "white",
+              toggleFunction: toggleModal,
             }}
             data={feelingTextData}
           />
@@ -95,13 +92,21 @@ export default function FeelingPicker() {
 
             <ButtonNormal
               title="Continue"
-              onPress={() => {}}
+              onPress={() => {
+                router.push("/(mood)/uplift_events_picker");
+              }}
               active={true}
               color={"#9F92C7"}
               height={50}
               width={310}
             />
           </View>
+          <ModalTester
+            toggleModal={toggleModal}
+            isModalVisible={isModalVisible}
+            data={feelingTextData}
+            changeData={changeData}
+          />
         </View>
       </SafeAreaView>
     </View>
@@ -133,7 +138,6 @@ const styles = StyleSheet.create({
   closeContainer: {
     paddingVertical: 10,
   },
-
   backTextStyle: {
     fontSize: 16,
   },

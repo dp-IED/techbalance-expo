@@ -13,34 +13,48 @@ import { AntDesign, Entypo } from "@expo/vector-icons";
 import ShadowScreenGradient from "@/components/ShadowScreenGradient";
 import MoodFeelingPicker from "@/components/MoodFeelingPicker";
 import ButtonNormal from "@/components/ButtonNormal";
+import MoodModal from "@/components/BottomModalEmoji";
+import { useState, useEffect } from "react";
 
 export default function EventsPicker() {
-  const feelingEmojiData = [
-    { id: 1, text: "Study", emoji: "📚" },
-    { id: 2, text: "Family", emoji: "🏠" },
-    { id: 3, text: "TV", emoji: "📺" },
-    { id: 4, text: "Shopping", emoji: "🛍" },
-    { id: 5, text: "Sleep", emoji: "💤" },
-    { id: 6, text: "Friends", emoji: "💙" },
-    { id: 7, text: "Money", emoji: "💷" },
-    { id: 8, text: "Gaming", emoji: "🎮" },
-    { id: 9, text: "Exercise", emoji: "🏃" },
-    { id: 10, text: "Partner", emoji: "💓" },
-    { id: 11, text: "Weather", emoji: "☔️" },
-    { id: 12, text: "Future plans", emoji: "🎯" },
-    { id: 13, text: "Nutrition", emoji: "🍔" },
-    { id: 14, text: "Life events", emoji: "😰" },
-    { id: 15, text: "Work", emoji: "💼" },
-    { id: 16, text: "Reading", emoji: "📖" },
-    { id: 17, text: "Mental health", emoji: "🧠" },
-    { id: 18, text: "Chores", emoji: "🧽" },
-    { id: 19, text: "Relax", emoji: "🕯" },
-    { id: 20, text: "Unsure", emoji: "🤔" },
-    { id: 21, text: "Social media", emoji: "📱" },
-    { id: 22, text: "Hobby", emoji: "🎲" },
-    { id: 23, text: "Nightlife", emoji: "💃" },
-    { id: 24, text: "Edit/New", emoji: "+" },
-  ];
+  const [feelingEmojiData, changeData] = useState<
+    { id: number; text: string; emoji: string }[]
+  >([]);
+
+  useEffect(() => {
+    changeData([
+      { id: 1, text: "Study", emoji: "📚" },
+      { id: 2, text: "Family", emoji: "🏠" },
+      { id: 3, text: "TV", emoji: "📺" },
+      { id: 4, text: "Shopping", emoji: "🛍" },
+      { id: 5, text: "Sleep", emoji: "💤" },
+      { id: 6, text: "Friends", emoji: "💙" },
+      { id: 7, text: "Money", emoji: "💷" },
+      { id: 8, text: "Gaming", emoji: "🎮" },
+      { id: 9, text: "Exercise", emoji: "🏃" },
+      { id: 10, text: "Partner", emoji: "💓" },
+      { id: 11, text: "Weather", emoji: "☔️" },
+      { id: 12, text: "Future plans", emoji: "🎯" },
+      { id: 13, text: "Nutrition", emoji: "🍔" },
+      { id: 14, text: "Life events", emoji: "😰" },
+      { id: 15, text: "Work", emoji: "💼" },
+      { id: 16, text: "Reading", emoji: "📖" },
+      { id: 17, text: "Mental health", emoji: "🧠" },
+      { id: 18, text: "Chores", emoji: "🧽" },
+      { id: 19, text: "Relax", emoji: "🕯" },
+      { id: 20, text: "Unsure", emoji: "🤔" },
+      { id: 21, text: "Social media", emoji: "📱" },
+      { id: 22, text: "Hobby", emoji: "🎲" },
+      { id: 23, text: "Nightlife", emoji: "💃" },
+      { id: 24, text: "Edit/New", emoji: "+" },
+    ]);
+  }, []);
+
+  const [isModalVisible, setModalVisible] = useState(false);
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  };
+
   const router = useRouter();
   const windowWidth = Dimensions.get("window").width;
 
@@ -82,6 +96,7 @@ export default function EventsPicker() {
               fontFamily: "Rubik_500Medium",
               notPressedTextColor: "black",
               pressedTextColor: "white",
+              toggleFunction: toggleModal,
             }}
             data={feelingEmojiData}
             style={{}}
@@ -100,6 +115,12 @@ export default function EventsPicker() {
               width={310}
             />
           </View>
+          <MoodModal
+            toggleModal={toggleModal}
+            isModalVisible={isModalVisible}
+            data={feelingEmojiData}
+            changeData={changeData}
+          />
         </View>
       </SafeAreaView>
     </View>

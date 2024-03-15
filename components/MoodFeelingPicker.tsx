@@ -18,6 +18,7 @@ interface ToggleButtonProps {
   fontFamily: string;
   notPressedTextColor: string;
   pressedTextColor: string;
+  toggleFunction: () => void;
 }
 
 interface MoodFeelingPickerProps {
@@ -42,7 +43,10 @@ const MoodFeelingPicker = ({
               .filter((item) => item.id % numRows === remainder)
               .map((item) => (
                 <View style={styles.buttonContainer} key={item.id}>
-                  <ToggleButton title={{text: item.text, emoji: item.emoji || ''}} {...buttonProps} />
+                  <ToggleButton
+                    title={{ text: item.text, emoji: item.emoji || "" }}
+                    {...buttonProps}
+                  />
                 </View>
               ))}
           </View>
