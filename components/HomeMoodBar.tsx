@@ -26,7 +26,7 @@ const HomeMoodBar = () => {
           source={require("../assets/images/home_pb_smile_icon.png")}
           style={styles.icon}
         />
-        <HomePlusButton widht={36} height={36} />
+        <HomePlusButton width={36} height={36} />
         <Image
           source={require("../assets/images/home_pb_sad_icon.png")}
           style={styles.icon}

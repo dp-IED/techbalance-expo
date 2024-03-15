@@ -7,7 +7,7 @@ export default function Layout() {
   const { user } = useContext(AuthContext);
   const [showTabs, setShowTabs] = useState<boolean>(false);
   if (user) {
-    return <Redirect href="/(home)" />;
+    return <Redirect href="/(home)/" />;
   }
 
   return (

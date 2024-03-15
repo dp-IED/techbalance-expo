@@ -1,20 +1,29 @@
 import { TouchableOpacity, StyleSheet } from "react-native";
 import { View, Text } from "./Themed";
-import { router } from "expo-router";
+import { router, Href } from "expo-router";
+import { GoalType } from "@/types/GoalType";
 
-const HomePlusButton = (props: { widht: number; height: number }) => {
-  const { widht, height } = props;
+const HomePlusButton = (props: {
+  width: number;
+  height: number;
+  href?: Href<string>;
+  params?: {
+    tab: GoalType;
+  };
+}) => {
+  const { width, height, href, params } = props;
 
   return (
     <TouchableOpacity
       onPress={() => {
-        router.push("/(notification)"); // change path to mood check-in
+        router.push({
+          pathname: href ?? "/(mood)/",
+          params: params,
+        });
       }}
     >
-      <View style={[styles.container, { height, width: widht }]}>
-        <Text style={[styles.text, { lineHeight: height }]}>
-          +
-        </Text>
+      <View style={[styles.container, { height, width: width }]}>
+        <Text style={[styles.text, { lineHeight: height }]}>+</Text>
       </View>
     </TouchableOpacity>
   );
