@@ -1,6 +1,7 @@
 import { View, Text, TouchableOpacity, Image, StyleSheet } from "react-native";
 import { GoalType } from "../types/GoalType";
 import HomePlusButton from "./HomePlusButton";
+import { Href, HrefObject } from "expo-router";
 
 const NoGoalSet = (props: {
   type: GoalType;
@@ -9,18 +10,30 @@ const NoGoalSet = (props: {
   isLast: boolean;
 }) => {
   return (
-    <View style={[styles.container, {height: props.windowHeight / 10, marginBottom: props.isLast ? 0 : props.windowHeight / 100}]}>
+    <View
+      style={[
+        styles.container,
+        {
+          height: props.windowHeight / 10,
+          marginBottom: props.isLast ? 0 : props.windowHeight / 100,
+        },
+      ]}
+    >
       <Image
         source={{ uri: props.iconUrl }}
         style={[styles.image, styles.opacity]}
       />
 
       <View style={[styles.textContainer, styles.opacity]}>
-        <Text style={styles.text}>
-          {props.type}
-        </Text>
+        <Text style={styles.text}>{props.type}</Text>
       </View>
-      <HomePlusButton widht={45} height={45} />
+
+      <HomePlusButton
+        width={45}
+        height={45}
+        href={"/(goals)/(sharedTopBar)/"}
+        params={{ tab: props.type as GoalType }}
+      />
     </View>
   );
 };

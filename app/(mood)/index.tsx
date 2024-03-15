@@ -131,7 +131,6 @@ const index = () => {
           onPress={() => {}}
           active={true}
           color={animatedColor}
-          height={40}
         />
         <TouchableOpacity style={{ marginVertical: 10 }}>
           <Text>Save without Details</Text>

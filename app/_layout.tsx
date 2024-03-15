@@ -71,8 +71,6 @@ async function registerForPushNotificationsAsync() {
     token = await Notifications.getExpoPushTokenAsync({
       projectId: projectId,
     });
-  } else {
-    alert("Must use physical device for Push Notifications");
   }
 
   return token?.data ?? null;
@@ -172,8 +170,6 @@ export default function Root() {
       }
     };
   }, []);
-
-  // Render the children routes now that all the assets are loaded.
 
   SplashScreen.hideAsync();
 

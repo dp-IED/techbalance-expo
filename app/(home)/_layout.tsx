@@ -1,3 +1,4 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Stack, Tabs } from "expo-router";
 import { View, Image } from "react-native";
 
