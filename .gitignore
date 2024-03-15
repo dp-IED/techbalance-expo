@@ -65,3 +65,5 @@ amplifytools.xcconfig
 
 .vscode
 .env
+scripts/testEdgeFunction.ts
+.env
