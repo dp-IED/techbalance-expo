@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Image, ImageSourcePropType } from "react-native";
 
 const ButtonWithIcon = ({
   title,
@@ -13,7 +13,7 @@ const ButtonWithIcon = ({
   style?: object;
   active: boolean;
   color: string;
-  icon: any;
+  icon: ImageSourcePropType;
 }) => {
   const buttonStyle = StyleSheet.create({
     button: {
