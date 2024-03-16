@@ -1,5 +1,5 @@
 import { TouchableOpacity, StyleSheet } from "react-native";
-import { View, Text } from "./Themed";
+import { View, Text } from "react-native";
 import { router, Href } from "expo-router";
 import { GoalType } from "@/types/GoalType";
 

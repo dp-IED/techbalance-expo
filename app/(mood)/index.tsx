@@ -13,6 +13,7 @@ import { Entypo } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import SafeViewAndroid from "@/components/SafeViewAndroid";
 import ButtonNormal from "@/components/ButtonNormal";
+import { router } from "expo-router";
 
 // to get the circle width
 const deviceWidth = Dimensions.get("window").width;
@@ -128,8 +129,13 @@ const index = () => {
         </View>
         <ButtonNormal
           title="Add details"
-          onPress={() => {}}
+          onPress={() => {
+            router.push({
+              pathname: "/(mood)/feeling_picker",
+            });
+          }}
           active={true}
+          height={18}
           color={animatedColor}
         />
         <TouchableOpacity style={{ marginVertical: 10 }}>

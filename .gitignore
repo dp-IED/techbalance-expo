@@ -67,3 +67,4 @@ amplifytools.xcconfig
 .env
 scripts/testEdgeFunction.ts
 .env
+.env

@@ -1,4 +1,4 @@
-import { View, Text } from "@/components/Themed";
+import { View, Text } from "react-native";
 import { TouchableOpacity, ScrollView, TextInput } from "react-native";
 import { GoalType } from "@/types/GoalType";
 import { useEffect, useState } from "react";
