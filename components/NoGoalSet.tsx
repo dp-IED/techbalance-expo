@@ -1,6 +1,7 @@
 import { View, Text, TouchableOpacity, Image, StyleSheet } from "react-native";
 import { GoalType } from "../types/GoalType";
 import HomePlusButton from "./HomePlusButton";
+import { Href, HrefObject } from "expo-router";
 
 const NoGoalSet = (props: {
 	type: GoalType;

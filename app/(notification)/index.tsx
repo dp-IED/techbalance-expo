@@ -1,7 +1,6 @@
 import SafeViewAndroid from "@/components/SafeViewAndroid";
 import { router } from "expo-router";
 import { View, Text, SafeAreaView, Pressable } from "react-native";
-
 import { useRouter } from "expo-router";
 
 export default function Notification() {

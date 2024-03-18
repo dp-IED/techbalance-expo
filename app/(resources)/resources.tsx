@@ -1,4 +1,4 @@
-import { View, Text } from "@/components/Themed";
+import { View, Text } from "react-native";
 
 export default function Resources() {
   return (

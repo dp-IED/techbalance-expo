@@ -1,6 +1,8 @@
 import { TouchableOpacity, StyleSheet } from "react-native";
-import { View, Text } from "./Themed";
-import { router } from "expo-router";
+import { View, Text } from "react-native";
+import { router, Href } from "expo-router";
+import { GoalType } from "@/types/GoalType";
+
 
 const HomePlusButton = (props: { width: number; height: number, onPress: () => void }) => {
 	const { width: width, height } = props;

@@ -16,51 +16,37 @@ import TotalGoalsRow from "@/components/TotalGoalsRow";
 import SafeViewAndroid from "@/components/SafeViewAndroid";
 import ShadowScreenGradient from "@/components/ShadowScreenGradient";
 import HomeMoodBar from "@/components/HomeMoodBar";
-import GoalContextMenu from "@/components/GoalContextMenu";
+
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Home() {
-	const props: {
-		goals: Goal[];
-	} = {
-		goals: [
-			{
-				id: "1",
-				icon: "https://i.ibb.co/pKxKH9p/Cone.png",
-				title: "Digital Detox",
-				description: "This is a test goal",
-				type: "Self",
-				completed: false,
-				time: "13:00 - 18:00",
-			},
-			{
-				id: "2",
-				icon: "https://i.ibb.co/M7cs1yk/Frame-2608646.png",
-				title: "Coffee with a friend",
-				description: "This is a test goal 2",
-				type: "People",
-				completed: false,
-				time: "12:00",
-			},
-			{
-				id: "3",
-				icon: "https://i.ibb.co/GRkvtgd/Cube.png",
-				title: "Go for a walk",
-				description: "This is a test goal 2",
-				type: "Body",
-				completed: false,
-				time: "10:00",
-			},
-		],
-	};
+  const getGoals = async () => {
+    setLoading(true);
+    try {
+      const goals = await AsyncStorage.multiGet([
+        "goal-Body",
+        "goal-Self",
+        "goal-People",
+      ]);
 
-	const [data, setData] = useState<Goal[]>([]);
-	const [completion, setCompletion] = useState(0);
-	const windowWidth = Dimensions.get("window").width;
-	const windowHeight = Dimensions.get("window").height;
-	const [isLoading, setLoading] = useState(true);
-	const [bodyModalVisibility, setBodyModalVisibility] = useState(false);
-	const [selfModalVisibility, setSelfModalVisibility] = useState(false);
-	const [peopleModalVisibility, setPeopleModalVisibility] = useState(false);
+      goals.map((goal) => {
+        if (goal[1]) {
+          console.log(JSON.parse(goal[1]));
+          dispatch({ type: "ADD_GOAL", goal: JSON.parse(goal[1]) });
+          return JSON.parse(goal[1]);
+        }
+      });
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const [completion, setCompletion] = useState(0);
+  const windowWidth = Dimensions.get("window").width;
+  const windowHeight = Dimensions.get("window").height;
+  const [isLoading, setLoading] = useState(true);
 
 	type State = {
 		selfGoal: Goal | undefined;
@@ -73,11 +59,12 @@ export default function Home() {
 		| { type: "UPDATE_GOAL"; goal: Goal }
 		| { type: "COMPLETE_GOAL"; goal: Goal };
 
-	const initialState: State = {
-		bodyGoal: props.goals.find((goal) => goal.type === "Body"),
-		selfGoal: props.goals.find((goal) => goal.type === "Self"),
-		peopleGoal: props.goals.find((goal) => goal.type === "People"),
-	};
+
+  const initialState: State = {
+    bodyGoal: undefined,
+    selfGoal: undefined,
+    peopleGoal: undefined,
+  };
 
 	const reducer = (state: State, action: Action): State => {
 		switch (action.type) {
@@ -167,32 +154,10 @@ export default function Home() {
 
 	const [state, dispatch] = useReducer(reducer, initialState);
 
-	// to split
-	const getGoals = async () => {
-		const url = "https://65e20096a8583365b317c6e1.mockapi.io/goals";
-		try {
-			const response = await fetch(url, {
-				method: "GET",
-				headers: {
-					Accept: "application/json",
-					"Content-Type": "application/json",
-				},
-			});
-			// await new Promise((resolve) => setTimeout(resolve, 2000)); // sleep for 2s
-			const listOfGoals = (await response.json()) as [Goal];
-			//console.log(listOfGoals[0].icon);
-			setData(listOfGoals);
-		} catch (error) {
-			// todo: handle error
-			console.error(error);
-		} finally {
-			setLoading(false);
-		}
-	};
 
-	useEffect(() => {
-		getGoals();
-	}, []);
+  useEffect(() => {
+    getGoals();
+  }, []);
 
 	useEffect(() => {
 		setCompletion(
@@ -201,6 +166,7 @@ export default function Home() {
 				(state.peopleGoal?.completed ? 1 : 0)
 		);
 	}, [state]);
+
 
 	return (
 		<View style={{ backgroundColor: "white", height: "100%" }}>
@@ -241,7 +207,6 @@ export default function Home() {
 					}}
 				>
 					<TotalGoalsRow completion={completion} />
-
 					<View
 						style={{
 							width: "100%",
