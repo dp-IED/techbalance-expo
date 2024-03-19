@@ -135,7 +135,7 @@ const index = () => {
             });
           }}
           active={true}
-          height={18}
+          height={40}
           color={animatedColor}
         />
         <TouchableOpacity style={{ marginVertical: 10 }}>

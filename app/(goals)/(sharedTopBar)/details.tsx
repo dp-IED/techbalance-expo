@@ -122,7 +122,7 @@ export default function GoalDetails() {
             alignSelf: "stretch",
             backgroundColor: "#F6F5FA",
             borderRadius: 30,
-            fontFamily: "Rubik",
+            fontFamily: "Rubik_400Regular",
             fontSize: 18,
             color: "#9F92C7",
             fontWeight: state.title.length > 0 ? "600" : "bold",
@@ -153,7 +153,7 @@ export default function GoalDetails() {
             style={{
               color: "#49454F",
               textAlign: "right",
-              fontFamily: "Rubik",
+              fontFamily: "Rubik_400Regular",
               fontSize: 17,
               fontStyle: "normal",
               fontWeight: "700",
@@ -207,7 +207,7 @@ export default function GoalDetails() {
             style={{
               color: "#49454F",
               textAlign: "right",
-              fontFamily: "Rubik",
+              fontFamily: "Rubik_400Regular",
               fontSize: 17,
               fontStyle: "normal",
               fontWeight: "700",
@@ -261,7 +261,7 @@ export default function GoalDetails() {
             style={{
               color: "#49454F",
               textAlign: "left",
-              fontFamily: "Rubik",
+              fontFamily: "Rubik_400Regular",
               fontSize: 17,
               fontStyle: "normal",
               fontWeight: "700",
@@ -303,7 +303,7 @@ export default function GoalDetails() {
         <Text
           style={{
             color: "#9F92C7",
-            fontFamily: "Rubik",
+            fontFamily: "Rubik_400Regular",
             fontSize: 18,
             fontWeight: "700",
             lineHeight: 35,
@@ -374,7 +374,7 @@ export default function GoalDetails() {
             style={{
               color: "#FFF",
               textAlign: "right",
-              fontFamily: "Rubik",
+              fontFamily: "Rubik_400Regular",
               fontSize: 18,
               fontWeight: "bold",
             }}
@@ -395,7 +395,7 @@ export default function GoalDetails() {
         >
           <Text
             style={{
-              fontFamily: "Rubik",
+              fontFamily: "Rubik_400Regular",
               fontSize: 18,
               lineHeight: 35,
               color: "#9F92C7",

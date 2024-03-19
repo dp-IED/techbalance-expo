@@ -47,6 +47,9 @@ export default function Home() {
   const windowWidth = Dimensions.get("window").width;
   const windowHeight = Dimensions.get("window").height;
   const [isLoading, setLoading] = useState(true);
+	const [bodyModalVisibility, setBodyModalVisibility] = useState(false);
+	const [peopleModalVisibility, setPeopleModalVisibility] = useState(false);
+	const [selfModalVisibility, setSelfModalVisibility] = useState(false);
 
 	type State = {
 		selfGoal: Goal | undefined;
@@ -181,7 +184,7 @@ export default function Home() {
 					}}
 				/>
 			)}
-			<ShadowScreenGradient />
+			{/* <ShadowScreenGradient />  VALERIIA CAN ADD THE PROPS HERE */}
 			<SafeAreaView style={SafeViewAndroid.AndroidSafeArea}>
 				{/* <ScrollView> */}
 				<AppBar />

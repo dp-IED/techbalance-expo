@@ -1,7 +1,7 @@
 import { View, Text, TouchableOpacity, Image, StyleSheet } from "react-native";
 import { GoalType } from "../types/GoalType";
 import HomePlusButton from "./HomePlusButton";
-import { Href, HrefObject } from "expo-router";
+import { Href, HrefObject, router } from "expo-router";
 
 const NoGoalSet = (props: {
 	type: GoalType;
@@ -27,7 +27,7 @@ const NoGoalSet = (props: {
 			<View style={[styles.textContainer, styles.opacity]}>
 				<Text style={styles.text}>{props.type}</Text>
 			</View>
-			<HomePlusButton width={45} height={45} onPress={() => {}}/>
+			<HomePlusButton width={45} height={45} onPress={() => {router.push("/(goals)/(sharedTopBar)")}}/>
 		</View>
 	);
 };

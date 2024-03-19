@@ -23,7 +23,7 @@ const FilterButton = (props: {
       <Text
         style={{
           color: selected ? "#FFF" : "#49454F",
-          fontFamily: "Rubik",
+          fontFamily: "Rubik_400Regular",
           fontSize: 14,
           fontWeight: "700",
           lineHeight: 18,

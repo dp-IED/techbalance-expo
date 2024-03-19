@@ -244,7 +244,7 @@ export default function AddGoal() {
         <Text
           style={{
             color: "#9F92C7",
-            fontFamily: "Rubik",
+            fontFamily: "Rubik_400Regular",
             fontSize: 16,
             fontWeight: "600",
             lineHeight: 18,
@@ -277,7 +277,7 @@ export default function AddGoal() {
       <Text
         style={{
           color: "#49454F",
-          fontFamily: "Rubik",
+          fontFamily: "Rubik_400Regular",
           fontSize: 16,
           fontStyle: "normal",
           fontWeight: "600",
@@ -368,7 +368,7 @@ export default function AddGoal() {
           alignSelf: "stretch",
           backgroundColor: "#F6F5FA",
           borderRadius: 30,
-          fontFamily: "Rubik",
+          fontFamily: "Rubik_400Regular",
           fontSize: 18,
           color: "#9F92C7",
           fontWeight: customGoal.length > 0 ? "600" : "bold",
